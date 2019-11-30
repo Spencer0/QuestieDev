@@ -44,7 +44,6 @@ function QuestieCoords:WriteCoords()
                           format("(%d, %d) ", posX, posY) .. GetMinimapZoneText()
                       );
           end
-
           -- if main map
           if Questie.db.global.mapCoordinatesEnabled and WorldMapFrame:IsVisible() then
               -- get cursor position
@@ -67,27 +66,20 @@ function QuestieCoords:WriteCoords()
 
               worldmapCoordsText = worldmapCoordsText.."|  Player: "..format(precision.. " X , ".. precision .." Y", posX, posY);
               -- Add text to world map
-              GetMapTitleText():SetText(worldmapCoordsText)
+              GetMapTitleText():SetText(worldmapCoordsText);
           end
         end
     end
 end
 
 function QuestieCoords:Initialize()
-    --QuestieCoords.coordFrame = CreateFrame("Frame");
-    --QuestieCoords.coordFrame:SetScript("OnUpdate", QuestieCoords.Update);
-    C_Timer.NewTicker(QuestieCoords.updateInterval, QuestieCoords.Update)
+    C_Timer.NewTicker(QuestieCoords.updateInterval, QuestieCoords.Update);
 end
 
 function QuestieCoords:Update(elapsed)
     if (Questie.db.global.minimapCoordinatesEnabled) or
         (Questie.db.global.mapCoordinatesEnabled) then
-
-        --totalTime = totalTime + elapsed;
-        --if(totalTime > QuestieCoords.updateInterval) then
-        --    totalTime = 0;
             QuestieCoords.WriteCoords();
-        --end
     end
 end
 
