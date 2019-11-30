@@ -32,8 +32,8 @@ QuestieJourney.lastOpenWindow = "journey";
 local containerCache = nil;
 
 function JumpToQuest(button)
-    QuestieSearchResults:JumpToQuest(button)
-    HideJourneyTooltip()
+    QuestieSearchResults:JumpToQuest(button);
+    HideJourneyTooltip();
  end
 
 local journeyTreeFrame = nil;
@@ -100,7 +100,7 @@ local function SplitJourneyByDate()
                     else
                         state = "ERROR!!";
                     end
-                    local quest = QuestieDB:GetQuest(entry.Quest)
+                    local quest = QuestieDB:GetQuest(entry.Quest);
                     if quest then
                         local qName = quest.name;
                         entryText = QuestieLocale:GetUIString('JOURNEY_TABLE_QUEST', state, qName);
@@ -138,7 +138,7 @@ local function ManageJourneyTree(container)
         local journeyTree = {};
         journeyTree = SplitJourneyByDate();
         journeyTreeFrame:SetTree(journeyTree);
-        journeyTreeFrame:SetCallback("OnGroupSelected", function(group)
+        journeyTreeFrame:SetCallback("OnGroupSelected", function(group);
 
             local _, _, e = strsplit("\001", group.localstatus.selected);
 
@@ -206,7 +206,7 @@ local function ManageJourneyTree(container)
                         state = "ERROR!!";
                     end
 
-                    local quest = QuestieDB:GetQuest(entry.Quest)
+                    local quest = QuestieDB:GetQuest(entry.Quest);
                     if quest then
                         local qName = quest.name;
                         header:SetText(QuestieLocale:GetUIString('JOURNEY_TABLE_QUEST', state, qName));
@@ -363,7 +363,7 @@ function NotePopup()
         notesPopupWinIsOpen = true;
         _G["QuestieJourneyFrame"] = notesPopupWin.frame;
 
-        notesPopupWin:SetCallback("OnClose", function()
+        notesPopupWin:SetCallback("OnClose", function();
             notesPopupWin = nil;
             notesPopupWinIsOpen = false;
             journeyFrame.frame.frame:SetFrameStrata("FULLSCREEN_DIALOG");
@@ -406,7 +406,7 @@ function NotePopup()
 
         local addEntryBtn = AceGUI:Create("Button");
         addEntryBtn:SetText(QuestieLocale:GetUIString('JOURNEY_NOTE_SUBMIT_BTN'));
-        addEntryBtn:SetCallback("OnClick", function()
+        addEntryBtn:SetCallback("OnClick", function();
             local err = Questie:Colorize('[Questie] ', 'blue');
             if titleBox:GetText() == '' then
                 print (err .. QuestieLocale:GetUIString('JOURNEY_ERR_NOTITLE'));
@@ -421,7 +421,7 @@ function NotePopup()
             data.Note = messageBox:GetText();
             data.Title = titleBox:GetText();
             data.Timestamp = time();
-            data.Party = QuestiePlayer:GetPartyMembers()
+            data.Party = QuestiePlayer:GetPartyMembers();
 
             tinsert(Questie.db.char.journey, data);
 
@@ -451,7 +451,7 @@ function ShowJourneyTooltip(button)
     if quest then
         GameTooltip:SetOwner(_G["QuestieJourneyFrame"], "ANCHOR_CURSOR");
         GameTooltip:AddLine("[".. quest.level .."] ".. quest.name);
-        GameTooltip:AddLine("|cFFFFFFFF" .. CreateObjectiveText(quest.Description))
+        GameTooltip:AddLine("|cFFFFFFFF" .. CreateObjectiveText(quest.Description));
         GameTooltip:SetFrameStrata("TOOLTIP");
         GameTooltip:Show();
     end
@@ -840,7 +840,7 @@ local function ManageZoneTree(container, zt)
 
         zoneTreeFrame.treeframe:SetWidth(220);
 
-        zoneTreeFrame:SetCallback("OnGroupSelected", function(group)
+        zoneTreeFrame:SetCallback("OnGroupSelected", function(group);
 
             -- if they clicked on the header, don't do anything
             local sel = group.localstatus.selected;
@@ -897,35 +897,35 @@ local function DrawZoneQuestTab(container)
     CDropdown:SetList(QuestieJourney.continents);
     CDropdown:SetText(QuestieLocale:GetUIString('JOURNEY_SELECT_CONT'));
 
-    local currentContinentId = QuestiePlayer:GetCurrentContinentId()
+    local currentContinentId = QuestiePlayer:GetCurrentContinentId();
     if currentContinentId > 0 then
-        CDropdown:SetValue(currentContinentId)
+        CDropdown:SetValue(currentContinentId);
     end
 
-    CDropdown:SetCallback("OnValueChanged", function(key, checked)
-        local sortedZones = QuestieJourneyUtils:GetSortedZoneKeys(QuestieJourney.zones[key.value])
+    CDropdown:SetCallback("OnValueChanged", function(key, checked);
+        local sortedZones = QuestieJourneyUtils:GetSortedZoneKeys(QuestieJourney.zones[key.value]);
         zDropdown:SetList(QuestieJourney.zones[key.value], sortedZones);
         zDropdown:SetText(QuestieLocale:GetUIString('JOURNEY_SELECT_ZONE'));
         zDropdown:SetDisabled(false);
-    end)
+    end);
     container:AddChild(CDropdown);
 
     -- Dropdown for Zone
     zDropdown:SetText(QuestieLocale:GetUIString('JOURNEY_SELECT_ZONE'));
 
-    local currentZoneId = QuestiePlayer:GetCurrentZoneId()
+    local currentZoneId = QuestiePlayer:GetCurrentZoneId();
     if currentZoneId > 0 then
-        local sortedZones = QuestieJourneyUtils:GetSortedZoneKeys(QuestieJourney.zones[currentContinentId])
+        local sortedZones = QuestieJourneyUtils:GetSortedZoneKeys(QuestieJourney.zones[currentContinentId]);
         zDropdown:SetList(QuestieJourney.zones[currentContinentId], sortedZones);
-        zDropdown:SetValue(currentZoneId)
-        local zoneTree = CollectZoneQuests(currentZoneId)
+        zDropdown:SetValue(currentZoneId);
+        local zoneTree = CollectZoneQuests(currentZoneId);
         -- Build Tree
         ManageZoneTree(treegroup, zoneTree);
     else
         zDropdown:SetDisabled(true);
     end
 
-    zDropdown:SetCallback("OnValueChanged", function(key, checked)
+    zDropdown:SetCallback("OnValueChanged", function(key, checked);
         -- Create Tree View
         local zoneTree = CollectZoneQuests(key.value);
         -- Build Tree
@@ -950,10 +950,10 @@ end
 
 -- Get all the available/completed/repeatable/unavailable quests
 
----@param zoneId integer @The zone ID (Check `LangZoneLookup`)
+---@param zoneId integer @The zone ID (Check `LangZoneLookup`);
 ---@return table<integer,any> @The zoneTree table which represents the list of all the different quests
 function CollectZoneQuests(zoneId)
-    local quests = QuestieDB:GetQuestsByZoneId(zoneId)
+    local quests = QuestieDB:GetQuestsByZoneId(zoneId);
     local temp = {}
 
     local zoneTree = {
@@ -979,7 +979,7 @@ function CollectZoneQuests(zoneId)
         }
     }
 
-    local sortedQuestByLevel = QuestieLib:SortQuestsByLevel(quests)
+    local sortedQuestByLevel = QuestieLib:SortQuestsByLevel(quests);
 
     local availableCounter = 0
     local completedCounter = 0
@@ -993,36 +993,36 @@ function CollectZoneQuests(zoneId)
         -- Only show quests which are not hidden
         if not quest.isHidden and QuestieCorrections.hiddenQuests and not QuestieCorrections.hiddenQuests[qId] then
             temp.value = qId
-            temp.text = quests[qId]:GetColoredQuestName()
+            temp.text = quests[qId]:GetColoredQuestName();
 
             -- Completed quests
             if Questie.db.char.complete[qId] then
-                tinsert(zoneTree[2].children, temp)
+                tinsert(zoneTree[2].children, temp);
                 completedCounter = completedCounter + 1
             else
                 -- Unobtainable quests
                 if quest.exclusiveTo then
                     for _, exId in pairs(quest.exclusiveTo) do
                         if Questie.db.char.complete[exId] and zoneTree[4].children[qId] == nil then
-                            tinsert(zoneTree[4].children, temp)
+                            tinsert(zoneTree[4].children, temp);
                             unobtainableCounter = unobtainableCounter + 1
                         end
                     end
                 -- Unoptainable profession quests
                 elseif not QuestieProfessions:HasProfessionAndSkill(quest.requiredSkill) then
-                    tinsert(zoneTree[4].children, temp)
+                    tinsert(zoneTree[4].children, temp);
                     unobtainableCounter = unobtainableCounter + 1
                 -- Unoptainable reputation quests
                 elseif not QuestieProfessions:HasReputation(quest.requiredMinRep, quest.requiredMaxRep) then
-                    tinsert(zoneTree[4].children, temp)
+                    tinsert(zoneTree[4].children, temp);
                     unobtainableCounter = unobtainableCounter + 1
                 -- Repeatable quests
                 elseif quest.Repeatable then
-                    tinsert(zoneTree[3].children, temp)
+                    tinsert(zoneTree[3].children, temp);
                     repeatableCounter = repeatableCounter + 1
                 -- Available quests
                 else
-                    tinsert(zoneTree[1].children, temp)
+                    tinsert(zoneTree[1].children, temp);
                     availableCounter = availableCounter + 1;
                 end
             end
@@ -1067,7 +1067,7 @@ function QuestieJourney:Initialize()
     journeyFrame.frame:SetTitle(QuestieLocale:GetUIString('JOURNEY_TITLE', UnitName("player")));
     journeyFrame.frame:SetLayout("Fill");
 
-    QuestieJourney.tabGroup = AceGUI:Create("TabGroup")
+    QuestieJourney.tabGroup = AceGUI:Create("TabGroup");
     QuestieJourney.tabGroup:SetLayout("Flow");
     QuestieJourney.tabGroup:SetTabs({
         {
@@ -1088,7 +1088,7 @@ function QuestieJourney:Initialize()
 
     journeyFrame.frame:AddChild(QuestieJourney.tabGroup);
 
-    journeyFrame.frame:SetCallback("OnClose", function()
+    journeyFrame.frame:SetCallback("OnClose", function();
         isWindowShown = false;
         if notesPopupWinIsOpen then
             notesPopupWin:Hide();
@@ -1169,7 +1169,7 @@ function QuestieJourney:PlayerLevelUp(level)
     data.Event = "Level";
     data.NewLevel = level;
     data.Timestamp = time();
-    data.Party = QuestiePlayer:GetPartyMembers()
+    data.Party = QuestiePlayer:GetPartyMembers();
 
     tinsert(Questie.db.char.journey, data);
 end
@@ -1182,7 +1182,7 @@ function QuestieJourney:AcceptQuest(questId)
     data.Quest = questId;
     data.Level = QuestiePlayer:GetPlayerLevel();
     data.Timestamp = time();
-    data.Party = QuestiePlayer:GetPartyMembers()
+    data.Party = QuestiePlayer:GetPartyMembers();
 
     tinsert(Questie.db.char.journey, data);
 end
@@ -1209,8 +1209,8 @@ function QuestieJourney:AbandonQuest(questId)
         data.SubType = "Abandon";
         data.Quest = questId;
         data.Level = QuestiePlayer:GetPlayerLevel();
-        data.Timestamp = time()
-        data.Party = QuestiePlayer:GetPartyMembers()
+        data.Timestamp = time();
+        data.Party = QuestiePlayer:GetPartyMembers();
 
         tinsert(Questie.db.char.journey, data);
     end
@@ -1224,7 +1224,7 @@ function QuestieJourney:CompleteQuest(questId)
     data.Quest = questId;
     data.Level = QuestiePlayer:GetPlayerLevel();
     data.Timestamp = time();
-    data.Party = QuestiePlayer:GetPartyMembers()
+    data.Party = QuestiePlayer:GetPartyMembers();
 
     tinsert(Questie.db.char.journey, data);
 end

@@ -1,19 +1,19 @@
 ---@class QuestieProfessions
 local QuestieProfessions = QuestieLoader:CreateModule("QuestieProfessions");
 ---@type QuestieQuest
-local QuestieQuest = QuestieLoader:ImportModule("QuestieQuest")
+local QuestieQuest = QuestieLoader:ImportModule("QuestieQuest");
 local playerProfessions = {}
 local professionTable = {}
 
 function QuestieProfessions:Update()
-    Questie:Debug(DEBUG_DEVELOP, "QuestieProfession: Update")
+    Questie:Debug(DEBUG_DEVELOP, "QuestieProfession: Update");
     ExpandSkillHeader(0) -- Expand all header
     local isProfUpdate = false
 
     for i=1, GetNumSkillLines() do
         if i > 14 then break; end -- We don't have to go through all the weapon skills
 
-        local skillName, isHeader, isExpanded, skillRank, _, _, _, _, _, _, _, _, _ = GetSkillLineInfo(i)
+        local skillName, isHeader, isExpanded, skillRank, _, _, _, _, _, _, _, _, _ = GetSkillLineInfo(i);
         if isHeader == nil and professionTable[skillName] then
             isProfUpdate = true -- A profession leveled up, not something like "Defense"
             playerProfessions[professionTable[skillName]] = skillRank
@@ -37,7 +37,7 @@ local function HasProfessionSkill(prof, skillLevel)
 end
 
 function QuestieProfessions:HasProfessionAndSkill(reqSkill)
-    return reqSkill == nil or (HasProfession(reqSkill[1]) and HasProfessionSkill(reqSkill[1], reqSkill[2]))
+    return reqSkill == nil or (HasProfession(reqSkill[1]) and HasProfessionSkill(reqSkill[1], reqSkill[2]));
 end
 
 -- There are no quests for Skinning and Mining so we don't need them

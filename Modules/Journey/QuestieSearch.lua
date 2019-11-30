@@ -30,18 +30,18 @@ end
 
 -- Execute a search by name for all types
 function QuestieSearch:ByName(query)
-    QuestieSearch:ResetResults()
+    QuestieSearch:ResetResults();
     for k,type in pairs(QuestieSearch.types) do
-        QuestieSearch:Search(query, type)
+        QuestieSearch:Search(query, type);
     end
     return QuestieSearch.LastResult
 end
 
 -- Execute a search by ID for all types
 function QuestieSearch:ByID(query)
-    QuestieSearch:ResetResults()
+    QuestieSearch:ResetResults();
     for k,type in pairs(QuestieSearch.types) do
-        QuestieSearch:Search(query, type, "int")
+        QuestieSearch:Search(query, type, "int");
     end
     return QuestieSearch.LastResult
 end
@@ -103,17 +103,17 @@ function QuestieSearch:Search(query, searchType, queryType)
     end
     -- By default the favourites are displayed
     local database = QuestieFavourites[searchType];
-    local queryLength = string.len(query)
+    local queryLength = string.len(query);
     -- We have a query meeting the minimal search length criteria, change to actualDatabase
-    if  (queryLength >= minLengthChars)
+    if  (queryLength >= minLengthChars);
         or
-        ((tonumber(query) ~= nil) and (queryLength >= minLengthInt))
+        ((tonumber(query) ~= nil) and (queryLength >= minLengthInt));
     then
         database = actualDatabase;
         -- We had a previous whole database search, we can use the smaller QuestieSearch.LastResult to search now
-        --[[if  ((tonumber(query) ~= nil) and (queryLength > minLengthInt))
+        --[[if  ((tonumber(query) ~= nil) and (queryLength > minLengthInt));
             or
-            ((queryLength > minLengthChars) and (queryLength > string.len(QuestieSearch.LastResult.query)))
+            ((queryLength > minLengthChars) and (queryLength > string.len(QuestieSearch.LastResult.query)));
         then
             database = QuestieSearch.LastResult[searchType];
         end]]--
@@ -134,25 +134,25 @@ function QuestieSearch:Search(query, searchType, queryType)
             and
             (
                 ( -- text search
-                    (queryType == "chars")
+                    (queryType == "chars");
                     and
                     (
                         (string.len(query) < minLengthChars) -- Too short, display favourites
                         or
                         (string.find(string.lower(dbEntry[NAME_KEY]), string.lower(query))) -- Perform search
-                    )
-                )
+                    );
+                );
                 or
                 ( -- id search
-                    (queryType == "int" and tonumber(query) ~= nil)
+                    (queryType == "int" and tonumber(query) ~= nil);
                     and
                     (
                         (string.len(query) < minLengthInt) -- Too short, display favourites
                         or
                         (string.find(tostring(id), query)) -- Perform search
-                    )
-                )
-            )
+                    );
+                );
+            );
         then -- We have a search result or a favourite to display
             searchCount = searchCount + 1;
             QuestieSearch.LastResult[searchType][id] = true;

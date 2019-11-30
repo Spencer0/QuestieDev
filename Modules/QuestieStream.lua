@@ -1,4 +1,4 @@
--- small binary stream library with "base 89" decoder (credit to Aero for the algorithm)
+-- small binary stream library with "base 89" decoder (credit to Aero for the algorithm);
 ---@class QuestieStreamLib
 local QuestieStreamLib = QuestieLoader:CreateModule("QuestieStreamLib");
 
@@ -30,7 +30,7 @@ QSL_ttab[92] = 125;
 local StreamPool = {}
 
 function QuestieStreamLib:GetStream(mode) -- returns a new stream
-    local stream = tremove(StreamPool)
+    local stream = tremove(StreamPool);
     if stream then
         return stream
     else
@@ -44,7 +44,7 @@ function QuestieStreamLib:GetStream(mode) -- returns a new stream
     stream._raw_bin = {}
     stream._rawptr = 1
     stream._level = 0
-    stream.reset = function(self)
+    stream.reset = function(self);
         self._pointer = 1
         self._bin = {}
         self._raw_bin = {}
@@ -52,8 +52,8 @@ function QuestieStreamLib:GetStream(mode) -- returns a new stream
         self._level = 0
     end
     stream.finished = function(self) -- its best to call this (not required) when done using the stream
-        self:reset()
-        tinsert(StreamPool, self)
+        self:reset();
+        tinsert(StreamPool, self);
     end
     if mode then
         if mode == "raw" then
@@ -84,7 +84,7 @@ function QuestieStreamLib:_readByte()
 end
 
 function QuestieStreamLib:WriteByte(val)
-    self:_WriteByte(val)
+    self:_WriteByte(val);
     self._raw_bin[self._rawptr] = val
     self._rawptr = self._rawptr + 1
 end
@@ -94,10 +94,10 @@ function QuestieStreamLib:SetPointer(pointer)
 end
 
 function QuestieStreamLib:_ReadByte_b89()
-    local v = self:_readByte()
+    local v = self:_readByte();
     if QSL_dltab[v] then
         self._level = QSL_dltab[v];
-        v = self:_readByte()
+        v = self:_readByte();
     end
     if QSL_dttab[v] then
         return self._level * 86 + QSL_dttab[v];
@@ -113,13 +113,13 @@ function QuestieStreamLib:_WriteByte_b89(e)
     local level = math.floor(e / 86);
     if not (self._level == level) then
         self._level = level
-        self:_writeByte(QSL_ltab[level])
+        self:_writeByte(QSL_ltab[level]);
     end
     local chr = mod(e, 86) + 33
     if QSL_ttab[chr] then
-        self:_writeByte(QSL_ttab[chr])
+        self:_writeByte(QSL_ttab[chr]);
     else
-        self:_writeByte(chr)
+        self:_writeByte(chr);
     end
 end
 
@@ -135,21 +135,21 @@ for k,v in pairs(_1short_control_table) do _1short_control_table_reversed[v] = k
 
 function QuestieStreamLib:_WriteByte_1short(e)
     if _1short_control_table_reversed[e] then
-        self:_writeByte(_1short_control)
-        self:_writeByte(_1short_control_table_reversed[e])
+        self:_writeByte(_1short_control);
+        self:_writeByte(_1short_control_table_reversed[e]);
     elseif e == 0 then
-        self:_writeByte(_1short_zero)
+        self:_writeByte(_1short_zero);
     else
-        self:_writeByte(e)
+        self:_writeByte(e);
     end
 end
 
 function QuestieStreamLib:_ReadByte_1short()
-    local v = self:_readByte()
+    local v = self:_readByte();
     if v == _1short_zero then
         return 0
     elseif v == _1short_control then
-        v = self:_readByte()
+        v = self:_readByte();
         return _1short_control_table[v]
     else
         return v
@@ -158,14 +158,14 @@ function QuestieStreamLib:_ReadByte_1short()
 end
 
 function QuestieStreamLib:_WriteByte_raw(e)
-    self:_writeByte(e)
+    self:_writeByte(e);
 end
 
 function QuestieStreamLib:_ReadByte_raw()
-    local val = string.byte(self._bin, self._pointer)
+    local val = string.byte(self._bin, self._pointer);
     self._pointer = self._pointer + 1
     return val
-    --return self:_readByte()
+    --return self:_readByte();
 end
 
 -- this is now set in GetStream based on type
@@ -187,7 +187,7 @@ function QuestieStreamLib:ReadBytes(count)
     for i=1, count do
         tinsert(ret, self:ReadByte());
     end
-    return unpack(ret)
+    return unpack(ret);
 end
 
 function QuestieStreamLib:ReadShorts(count)
@@ -195,7 +195,7 @@ function QuestieStreamLib:ReadShorts(count)
     for i=1, count do
         tinsert(ret, self:ReadShort());
     end
-    return unpack(ret)
+    return unpack(ret);
 end
 
 function QuestieStreamLib:ReadShort()
@@ -211,39 +211,39 @@ function QuestieStreamLib:ReadLong()
 end
 
 function QuestieStreamLib:ReadTinyString()
-    local length = self:ReadByte()
+    local length = self:ReadByte();
     local ret = {};
     for i = 1, length do
         tinsert(ret, self:ReadByte()) -- slightly better lua code is slightly better
     end
-    return string.char(unpack(ret))
+    return string.char(unpack(ret));
 end
 
 function QuestieStreamLib:ReadShortString()
-    local length = self:ReadShort()
+    local length = self:ReadShort();
     local ret = {};
     if length > unpack_limit then
         for i = 1, length do
-            tinsert(ret, string.char(self:ReadByte()))
+            tinsert(ret, string.char(self:ReadByte()));
         end
-        return table.concat(ret)
+        return table.concat(ret);
     else
         for i = 1, length do
             tinsert(ret, self:ReadByte()) -- slightly better lua code is slightly better
         end
-        return string.char(unpack(ret))
+        return string.char(unpack(ret));
     end
 end
 
 function QuestieStreamLib:WriteBytes(...)
     for _,val in pairs({...}) do
-        self:WriteByte(val)
+        self:WriteByte(val);
     end
 end
 
 function QuestieStreamLib:WriteShorts(...)
     for _,val in pairs({...}) do
-        self:WriteShort(val)
+        self:WriteShort(val);
     end
 end
 
@@ -290,21 +290,21 @@ end
 function QuestieStreamLib:Save()
     if self._pointer-1 > unpack_limit then
         for i=1,self._pointer-1 do
-            self._bin[i] = string.char(self._bin[i])
+            self._bin[i] = string.char(self._bin[i]);
         end
-        return table.concat(self._bin)
+        return table.concat(self._bin);
     end
-    return string.char(unpack(self._bin))
+    return string.char(unpack(self._bin));
 end
 
 function QuestieStreamLib:SaveRaw()
     if self._rawptr-1 > unpack_limit then
         for i=1,self._rawptr-1 do
-            self._raw_bin[i] = string.char(self._raw_bin[i])
+            self._raw_bin[i] = string.char(self._raw_bin[i]);
         end
-        return table.concat(self._raw_bin)
+        return table.concat(self._raw_bin);
     end
-    return string.char(unpack(self._raw_bin))
+    return string.char(unpack(self._raw_bin));
 end
 
 function QuestieStreamLib:Load(bin)

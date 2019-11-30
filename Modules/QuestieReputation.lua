@@ -9,11 +9,11 @@ local QuestieProfessions = QuestieLoader:ImportModule("QuestieProfessions");
 local playerReputations = {}
 
 function QuestieReputation:Update()
-    Questie:Debug(DEBUG_DEVELOP, "QuestieReputation: Update")
+    Questie:Debug(DEBUG_DEVELOP, "QuestieReputation: Update");
     ExpandFactionHeader(0) -- Expand all header
 
     for i=1, GetNumFactions() do
-        local _, _, _, _, _, barValue, _, _, isHeader, isCollapsed, _, _, _, factionID, _, _ = GetFactionInfo(i)
+        local _, _, _, _, _, barValue, _, _, isHeader, isCollapsed, _, _, _, factionID, _, _ = GetFactionInfo(i);
         if isHeader == nil or isHeader == false then
             playerReputations[factionID] = barValue
         end

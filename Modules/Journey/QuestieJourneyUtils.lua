@@ -10,9 +10,9 @@ function QuestieJourneyUtils:GetSortedZoneKeys(zones)
 
     local zoneNames = {}
     for k, _ in pairs(zones) do
-        table.insert(zoneNames, k)
+        table.insert(zoneNames, k);
     end
-    table.sort(zoneNames, compare)
+    table.sort(zoneNames, compare);
     return zoneNames
 end
 
@@ -31,9 +31,9 @@ function QuestieJourneyUtils:Spacer(container, size)
 end
 
 function QuestieJourneyUtils:AddLine(frame, text)
-    local label = AceGUI:Create("Label")
+    local label = AceGUI:Create("Label");
     label:SetFullWidth(true);
-    label:SetText(text)
-    label:SetFontObject(GameFontNormal)
-    frame:AddChild(label)
+    label:SetText(text);
+    label:SetFontObject(GameFontNormal);
+    frame:AddChild(label);
 end

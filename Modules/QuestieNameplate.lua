@@ -27,7 +27,7 @@ function QuestieNameplate:GetFrame(guid)
 
     local parent = C_NamePlate.GetNamePlateForUnit(activeGUIDs[guid]);
 
-    local frame = tremove(npUnusedFrames)
+    local frame = tremove(npUnusedFrames);
 
     if(not frame) then
         frame = CreateFrame("Frame");
@@ -38,15 +38,15 @@ function QuestieNameplate:GetFrame(guid)
 
     frame:SetFrameStrata("LOW");
     frame:SetFrameLevel(10);
-    frame:SetWidth(16 * iconScale)
-    frame:SetHeight(16 * iconScale)
+    frame:SetWidth(16 * iconScale);
+    frame:SetHeight(16 * iconScale);
     frame:EnableMouse(false);
     frame:SetParent(parent);
     frame:SetPoint("LEFT", Questie.db.global.nameplateX, Questie.db.global.nameplateY);
 
     frame.Icon = frame:CreateTexture(nil, "ARTWORK");
     frame.Icon:ClearAllPoints();
-    frame.Icon:SetAllPoints(frame)
+    frame.Icon:SetAllPoints(frame);
 
 
     npFrames[guid] = frame;
@@ -66,7 +66,7 @@ end
 
 function QuestieNameplate:RemoveFrame(guid)
     if npFrames[guid] then
-        table.insert(npUnusedFrames, npFrames[guid])
+        table.insert(npUnusedFrames, npFrames[guid]);
         npFrames[guid].Icon:SetTexture(nil); -- fix for overlapping icons
         npFrames[guid]:Hide();
         npFrames[guid] = nil;
@@ -113,7 +113,7 @@ function QuestieNameplate:NameplateCreated(token)
             activeGUIDs[unitGUID] = token;
 
             local f = QuestieNameplate:GetFrame(unitGUID);
-            f.Icon:SetTexture(icon)
+            f.Icon:SetTexture(icon);
             f.lastIcon = icon -- this is used to prevent updating the texture when it's already what it needs to be
             f:Show();
         end
@@ -197,18 +197,18 @@ function QuestieNameplate:DrawTargetFrame()
 
                         activeTargetFrame:SetFrameStrata("LOW");
                         activeTargetFrame:SetFrameLevel(10);
-                        activeTargetFrame:SetWidth(16 * iconScale)
-                        activeTargetFrame:SetHeight(16 * iconScale)
+                        activeTargetFrame:SetWidth(16 * iconScale);
+                        activeTargetFrame:SetHeight(16 * iconScale);
                         activeTargetFrame:EnableMouse(false);
                         activeTargetFrame:SetParent(TargetFrame);
                         activeTargetFrame:SetPoint("RIGHT", Questie.db.global.nameplateTargetFrameX, Questie.db.global.nameplateTargetFrameY);
 
                         activeTargetFrame.Icon = activeTargetFrame:CreateTexture(nil, "ARTWORK");
                         activeTargetFrame.Icon:ClearAllPoints();
-                        activeTargetFrame.Icon:SetAllPoints(activeTargetFrame)
+                        activeTargetFrame.Icon:SetAllPoints(activeTargetFrame);
                     end
 
-                    activeTargetFrame.Icon:SetTexture(icon)
+                    activeTargetFrame.Icon:SetTexture(icon);
                     activeTargetFrame:Show();
 
                 end
@@ -219,7 +219,7 @@ end
 
 function QuestieNameplate:HideCurrentTargetFrame()
     if activeTargetFrame then
-        activeTargetFrame.Icon:SetTexture(nil)
+        activeTargetFrame.Icon:SetTexture(nil);
         activeTargetFrame:Hide();
         activeTargetFrame = nil;
     end
