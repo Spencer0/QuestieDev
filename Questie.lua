@@ -1,12 +1,12 @@
 if(Questie) then
     C_Timer.After(4, function() 
-        error("ERROR!! -> Questie already loaded! Please only have one Questie installed!")
+        error("ERROR!! -> Questie already loaded! Please only have one Questie installed!");
         for i=1, 10 do
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000ERROR!!|r -> Questie already loaded! Please only have one Questie installed!")
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000ERROR!!|r -> Questie already loaded! Please only have one Questie installed!");
         end
     end);
-    error("ERROR!! -> Questie already loaded! Please only have one Questie installed!")
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000ERROR!!|r -> Questie already loaded! Please only have one Questie installed!")
+    error("ERROR!! -> Questie already loaded! Please only have one Questie installed!");
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000ERROR!!|r -> Questie already loaded! Please only have one Questie installed!");
     Questie = {}
     return nil;
 end
@@ -79,11 +79,11 @@ local QuestieLib = QuestieLoader:ImportModule("QuestieLib");
 ---@type QuestiePlayer
 local QuestiePlayer = QuestieLoader:ImportModule("QuestiePlayer");
 ---@type QuestieQuestTimers
-local QuestieQuestTimers = QuestieLoader:ImportModule("QuestieQuestTimers")
+local QuestieQuestTimers = QuestieLoader:ImportModule("QuestieQuestTimers");
 ---@type QuestieCombatQueue
-local QuestieCombatQueue = QuestieLoader:ImportModule("QuestieCombatQueue")
+local QuestieCombatQueue = QuestieLoader:ImportModule("QuestieCombatQueue");
 
--- check if user has updated but not restarted the game (todo: add future new source files to this)
+-- check if user has updated but not restarted the game (todo: add future new source files to this);
 if  (not LQuestie_EasyMenu) or
     --Libs
     (not QuestieLib) or
@@ -129,25 +129,25 @@ if  (not LQuestie_EasyMenu) or
     (not QuestieCombatQueue) or 
     (not QuestieTracker) then
     --Delay the warning.
-    C_Timer.After(8, function()
+    C_Timer.After(8, function();
         if QuestieLocale.locale['enUS'] and QuestieLocale.locale['enUS']['QUESTIE_UPDATED_RESTART'] then -- sometimes locale doesnt update without restarting also
-            print(QuestieLocale:GetUIString('QUESTIE_UPDATED_RESTART'))
+            print(QuestieLocale:GetUIString('QUESTIE_UPDATED_RESTART'));
         else
-            print("|cFFFF0000WARNING!|r You have updated Questie without restarting the game, this will likely cause problems. Please restart the game before continuing")
+            print("|cFFFF0000WARNING!|r You have updated Questie without restarting the game, this will likely cause problems. Please restart the game before continuing");
         end
-    end)
+    end);
   else
     -- Initialize Questie
-    Questie = LibStub("AceAddon-3.0"):NewAddon("Questie", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceComm-3.0", "AceSerializer-3.0", "AceBucket-3.0")
+    Questie = LibStub("AceAddon-3.0"):NewAddon("Questie", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceComm-3.0", "AceSerializer-3.0", "AceBucket-3.0");
     _Questie = {...}
 end
 
 
 
 
-function Questie:OnInitialize()
-    self.db = LibStub("AceDB-3.0"):New("QuestieConfig", QuestieOptionsDefaults:Load(), true)
-    QuestieFramePool:SetIcons()
+function Questie:OnInitialize();
+    self.db = LibStub("AceDB-3.0"):New("QuestieConfig", QuestieOptionsDefaults:Load(), true);
+    QuestieFramePool:SetIcons();
 
     -- Set proper locale. Either default to client Locale or override based on user.
     if Questie.db.global.questieLocaleDiff then
@@ -156,18 +156,18 @@ function Questie:OnInitialize()
         QuestieLocale:SetUILocale(GetLocale());
     end
 
-    Questie:Debug(DEBUG_CRITICAL, "Questie addon loaded")
-    QuestieCorrections:Initialize()
-    QuestieLocale:Initialize()
+    Questie:Debug(DEBUG_CRITICAL, "Questie addon loaded");
+    QuestieCorrections:Initialize();
+    QuestieLocale:Initialize();
 
-    Questie:RegisterEvent("PLAYER_LOGIN", QuestieEventHandler.PLAYER_LOGIN)
+    Questie:RegisterEvent("PLAYER_LOGIN", QuestieEventHandler.PLAYER_LOGIN);
 
     --Accepted Events
-    Questie:RegisterEvent("QUEST_ACCEPTED", QuestieEventHandler.QUEST_ACCEPTED)
-    Questie:RegisterEvent("MAP_EXPLORATION_UPDATED", QuestieEventHandler.MAP_EXPLORATION_UPDATED)
+    Questie:RegisterEvent("QUEST_ACCEPTED", QuestieEventHandler.QUEST_ACCEPTED);
+    Questie:RegisterEvent("MAP_EXPLORATION_UPDATED", QuestieEventHandler.MAP_EXPLORATION_UPDATED);
     Questie:RegisterEvent("UNIT_QUEST_LOG_CHANGED", QuestieEventHandler.UNIT_QUEST_LOG_CHANGED);
-    Questie:RegisterEvent("QUEST_TURNED_IN", QuestieEventHandler.QUEST_TURNED_IN)
-    Questie:RegisterEvent("QUEST_REMOVED", QuestieEventHandler.QUEST_REMOVED)
+    Questie:RegisterEvent("QUEST_TURNED_IN", QuestieEventHandler.QUEST_TURNED_IN);
+    Questie:RegisterEvent("QUEST_REMOVED", QuestieEventHandler.QUEST_REMOVED);
     Questie:RegisterEvent("PLAYER_LEVEL_UP", QuestieEventHandler.PLAYER_LEVEL_UP);
     -- Use bucket for QUEST_LOG_UPDATE to let information propagate through to the blizzard API
     -- Might be able to change this to 0.5 seconds instead, further testing needed.
@@ -175,10 +175,10 @@ function Questie:OnInitialize()
     Questie:RegisterEvent("MODIFIER_STATE_CHANGED", QuestieEventHandler.MODIFIER_STATE_CHANGED);
 
     -- Events to update a players professions and reputations
-    Questie:RegisterEvent("CHAT_MSG_SKILL", QuestieEventHandler.CHAT_MSG_SKILL)
-    Questie:RegisterEvent("CHAT_MSG_COMBAT_FACTION_CHANGE", QuestieEventHandler.CHAT_MSG_COMBAT_FACTION_CHANGE)
+    Questie:RegisterEvent("CHAT_MSG_SKILL", QuestieEventHandler.CHAT_MSG_SKILL);
+    Questie:RegisterEvent("CHAT_MSG_COMBAT_FACTION_CHANGE", QuestieEventHandler.CHAT_MSG_COMBAT_FACTION_CHANGE);
 
-    -- Party join event for QuestieComms, Use bucket to hinder this from spamming (Ex someone using a raid invite addon etc)
+    -- Party join event for QuestieComms, Use bucket to hinder this from spamming (Ex someone using a raid invite addon etc);
     Questie:RegisterBucketEvent("GROUP_ROSTER_UPDATE", 1, QuestieEventHandler.GROUP_ROSTER_UPDATE);
     Questie:RegisterEvent("GROUP_JOINED", QuestieEventHandler.GROUP_JOINED);
     Questie:RegisterEvent("GROUP_LEFT", QuestieEventHandler.GROUP_LEFT);
@@ -191,43 +191,40 @@ function Questie:OnInitialize()
     Questie:RegisterEvent("PLAYER_TARGET_CHANGED", QuestieNameplate.DrawTargetFrame);
 
     --When the quest is presented!
-    Questie:RegisterEvent("QUEST_DETAIL", QuestieAuto.QUEST_DETAIL)
+    Questie:RegisterEvent("QUEST_DETAIL", QuestieAuto.QUEST_DETAIL);
     --???
-    Questie:RegisterEvent("QUEST_PROGRESS", QuestieAuto.QUEST_PROGRESS)
+    Questie:RegisterEvent("QUEST_PROGRESS", QuestieAuto.QUEST_PROGRESS);
     --Gossip??
-    Questie:RegisterEvent("GOSSIP_SHOW", QuestieAuto.GOSSIP_SHOW)
+    Questie:RegisterEvent("GOSSIP_SHOW", QuestieAuto.GOSSIP_SHOW);
     --The window when multiple quest from a NPC
-    Questie:RegisterEvent("QUEST_GREETING", QuestieAuto.QUEST_GREETING)
+    Questie:RegisterEvent("QUEST_GREETING", QuestieAuto.QUEST_GREETING);
     --If an escort quest is taken by people close by
-    Questie:RegisterEvent("QUEST_ACCEPT_CONFIRM", QuestieAuto.QUEST_ACCEPT_CONFIRM)
+    Questie:RegisterEvent("QUEST_ACCEPT_CONFIRM", QuestieAuto.QUEST_ACCEPT_CONFIRM);
     --When complete window shows
-    Questie:RegisterEvent("QUEST_COMPLETE", QuestieAuto.QUEST_COMPLETE)
+    Questie:RegisterEvent("QUEST_COMPLETE", QuestieAuto.QUEST_COMPLETE);
 
     -- todo move this call into loader
-    QuestieTooltips:Initialize()
+    QuestieTooltips:Initialize();
 
     -- Initialize Coordinates
     QuestieCoords.Initialize();
 
-    QuestieQuestTimers:Initialize()
-    QuestieCombatQueue:Initialize()
+    QuestieQuestTimers:Initialize();
+    QuestieCombatQueue:Initialize();
 
     -- Initialize questiecomms
-    --C_ChatInfo.RegisterAddonMessagePrefix("questie")
-    -- JoinTemporaryChannel("questie")
-    --Questie:RegisterEvent("CHAT_MSG_ADDON", QuestieComms.MessageReceived)
 
     -- Initialize Journey Window
     QuestieJourney.Initialize();
 
     -- Register Slash Commands
-    Questie:RegisterChatCommand("questieclassic", "QuestieSlash")
-    Questie:RegisterChatCommand("questie", "QuestieSlash")
+    Questie:RegisterChatCommand("questieclassic", "QuestieSlash");
+    Questie:RegisterChatCommand("questie", "QuestieSlash");
 
     QuestieOptions:Initialize();
 
     --Initialize the DB settings.
-    Questie:debug(DEBUG_DEVELOP, QuestieLocale:GetUIString('DEBUG_CLUSTER', Questie.db.global.clusterLevelHotzone))
+    Questie:debug(DEBUG_DEVELOP, QuestieLocale:GetUIString('DEBUG_CLUSTER', Questie.db.global.clusterLevelHotzone));
     QUESTIE_CLUSTER_DISTANCE = Questie.db.global.clusterLevelHotzone;
 
     -- Creating the minimap config icon
@@ -239,7 +236,7 @@ function Questie:OnInitialize()
         Questie_Toggle:SetText(QuestieLocale:GetUIString('QUESTIE_MAP_BUTTON_HIDE'));
     else
         Questie_Toggle:SetText(QuestieLocale:GetUIString('QUESTIE_MAP_BUTTON_SHOW'));
-        QuestieQuest:ToggleNotes(false)
+        QuestieQuest:ToggleNotes(false);
     end
 
     -- Update status of Map button on hide between play sessions
@@ -250,12 +247,12 @@ function Questie:OnInitialize()
     end
 
     -- Change position of Map button when continent dropdown is hidden
-    C_Timer.After(1, function()
+    C_Timer.After(1, function();
         if not WorldMapContinentDropDown:IsShown() then
             Questie_Toggle:ClearAllPoints();
             if AtlasToggleFromWorldMap and AtlasToggleFromWorldMap:IsShown() then -- #1498
-                AtlasToggleFromWorldMap:SetScript("OnHide", function() Questie_Toggle:SetPoint('RIGHT', WorldMapFrameCloseButton, 'LEFT', 0, 0) end)
-                AtlasToggleFromWorldMap:SetScript("OnShow", function() Questie_Toggle:SetPoint('RIGHT', AtlasToggleFromWorldMap, 'LEFT', 0, 0) end)
+                AtlasToggleFromWorldMap:SetScript("OnHide", function() Questie_Toggle:SetPoint('RIGHT', WorldMapFrameCloseButton, 'LEFT', 0, 0) end);
+                AtlasToggleFromWorldMap:SetScript("OnShow", function() Questie_Toggle:SetPoint('RIGHT', AtlasToggleFromWorldMap, 'LEFT', 0, 0) end);
                 Questie_Toggle:SetPoint('RIGHT', AtlasToggleFromWorldMap, 'LEFT', 0, 0);
             else
                 Questie_Toggle:SetPoint('RIGHT', WorldMapFrameCloseButton, 'LEFT', 0, 0);
@@ -264,23 +261,23 @@ function Questie:OnInitialize()
     end);
 
     if Questie.db.global.dbmHUDEnable then
-        QuestieDBMIntegration:EnableHUD()
+        QuestieDBMIntegration:EnableHUD();
     end
 end
 
-function Questie:OnUpdate()
+function Questie:OnUpdate();
 
 end
 
-function Questie:OnEnable()
+function Questie:OnEnable();
     -- Called when the addon is enabled
 end
 
-function Questie:OnDisable()
+function Questie:OnDisable();
     -- Called when the addon is disabled
 end
 
-function Questie:QuestieSlash(input)
+function Questie:QuestieSlash(input);
 
     input = string.trim(input, " ");
 
@@ -314,7 +311,7 @@ function Questie:QuestieSlash(input)
     end
 
     if input == "reload" then
-        QuestieQuest:SmoothReset()
+        QuestieQuest:SmoothReset();
         return
     end
 
@@ -340,7 +337,7 @@ function Questie:QuestieSlash(input)
     print(Questie:Colorize("[Questie] :: ", 'yellow') .. QuestieLocale:GetUIString('SLASH_INVALID') .. Questie:Colorize('/questie help', 'yellow'));
 end
 
-function Questie:Colorize(str, color)
+function Questie:Colorize(str, color);
     local c = '';
 
     if color == 'red' then
@@ -362,7 +359,7 @@ function Questie:Colorize(str, color)
     return c .. str .. "|r"
 end
 
-function Questie:GetClassColor(class)
+function Questie:GetClassColor(class);
 
     class = string.lower(class);
 
@@ -389,15 +386,15 @@ function Questie:GetClassColor(class)
     end
 end
 
-function Questie:Error(...)
-    Questie:Print("|cffff0000[ERROR]|r", ...)
+function Questie:Error(...);
+    Questie:Print("|cffff0000[ERROR]|r", ...);
 end
 
-function Questie:error(...)
-    Questie:Error(...)
+function Questie:error(...);
+    Questie:Error(...);
 end
 
-function Questie:Debug(...)
+function Questie:Debug(...);
     if(Questie.db.global.debugEnabled) then
         -- Exponents are defined by `debugLevel.values` in QuestieOptionsAdvanced.lua
         -- DEBUG_CRITICAL = 0
@@ -410,17 +407,17 @@ function Questie:Debug(...)
         if(bit.band(Questie.db.global.debugLevel, math.pow(2, 2)) == 0 and select(1, ...) == DEBUG_INFO)then return; end
         if(bit.band(Questie.db.global.debugLevel, math.pow(2, 1)) == 0 and select(1, ...) == DEBUG_ELEVATED)then return; end
         if(bit.band(Questie.db.global.debugLevel, math.pow(2, 0)) == 0 and select(1, ...) == DEBUG_CRITICAL)then return; end
-        --Questie:Print(...)
+        --Questie:Print(...);
         if(QuestieConfigCharacter.log) then
             QuestieConfigCharacter = {};
         end
 
         if Questie.db.global.debugEnabledPrint then
-            Questie:Print(...)
+            Questie:Print(...);
         end
     end
 end
 
-function Questie:debug(...)
-    Questie:Debug(...)
+function Questie:debug(...);
+    Questie:Debug(...);
 end
