@@ -206,17 +206,6 @@ function QuestieFramePool:RecycleFrame(frame)
     end
 end
 
--- Local Functions --
-
---[[Use FRAME.Unload(FRAME) on frame object to unload!
-function _QuestieFramePool:UnloadFrame(frame)
-    --We are reseting the frames, making sure that no data is wrong.
-  HBDPins:RemoveMinimapIcon(Questie, frame);
-  HBDPins:RemoveWorldMapIcon(Questie, frame);
-  frame.data = nil; -- Just to be safe
-  frame.loaded = nil;
-    tinsert(_QuestieFramePool.unusedFrames, frame);
-end]]--
 function _QuestieFramePool:QuestieCreateFrame()
     _QuestieFramePool.numberOfFrames = _QuestieFramePool.numberOfFrames + 1
     local newFrame = QuestieFramePool.Qframe:New(_QuestieFramePool.numberOfFrames, _QuestieFramePool.Questie_Tooltip);

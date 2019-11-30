@@ -38,7 +38,6 @@ local function AddLinkedParagraph(frame, linkType, lookupObject, firstKey, secon
     if lookupObject[firstKey][secondKey] then
         QuestieJourneyUtils:AddLine(frame,  yellow .. header .. "|r");
         for _,id in pairs(lookupObject[firstKey][secondKey]) do
-            -- QuestieJourneyUtils:AddLine(frame, lookupDB[id][lookupKey].." ("..id..")");
             local link = AceGUI:Create("InteractiveLabel");
             link:SetText(lookupDB[id][lookupKey].." ("..id..")");
             link:SetCallback("OnClick", function(self) QuestieSearchResults:GetDetailFrame(linkType, id) end);

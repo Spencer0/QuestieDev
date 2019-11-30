@@ -38,34 +38,7 @@ _QuestieTracker.IsFirstRun = true -- bad code
 -- Forward declaration
 local _OnClick, _OnEnter, _OnLeave, _AQW_Insert, _RemoveQuestWatch
 
---[[function _TEST_F2()
-    local bag = CreateFrame("Frame", nil, UIParent);
-    local btn = CreateFrame("Button", nil, bag, "ContainerFrameItemButtonTemplate");
-    btn:SetSize(32, 32);
-    bag:SetSize(32, 32);
-    btn:SetPoint("Center",UIParent);
-    btn:SetID(3);
-    bag:SetID(0);
-    btn.Update = function(self);
-        local texture, count, locked, quality, _, _, link, filtered, _, id = GetContainerItemInfo(0, 3);
-        SetItemButtonTexture(self, texture);
-        --SetItemButtonQuality(self, quality, id);
-        SetItemButtonCount(self, count);
-        SetItemButtonDesaturated(self, locked);
-        --UpdateCooldown(self);
-    end
-    --local oldOnClick = btn:GetScript("OnClick");
-    --btn:RegisterForClicks("LeftButton");
-    btn:SetScript("OnClick", function(self);
-        ContainerFrameItemButton_OnClick(self, "RightButton");
-    end);
-    --btn:SetScript("OnClick", function(self, a, b, c, d, e, f);
-    --    oldOnClick(self, a, b, c, d, e, f);
-    --end);
-    btn:Update();
-    btn:Show();
-    return btn
-end]]--
+
 
 local function createItemButton()
     local btn = CreateFrame("Button", nil, nil, "SecureActionButtonTemplate,ActionButtonTemplate");

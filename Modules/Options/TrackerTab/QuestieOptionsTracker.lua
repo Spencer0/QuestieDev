@@ -143,19 +143,7 @@ function QuestieOptions.tabs.tracker:Initialize()
                 end
             },
             Spacer_R = QuestieOptionsUtils:Spacer(7.3,5),
-            --[[colorObjectives = {
-                type = "toggle",
-                order = 6,
-                width = "full",
-                name = function() return QuestieLocale:GetUIString('TRACKER_COLOR_OBJECTIVES'); end,
-                desc = function() return QuestieLocale:GetUIString('TRACKER_COLOR_OBJECTIVES_DESC'); end,
-                get = function() return Questie.db.global.trackerColorObjectives end,
-                set = function (info, value)
-                    Questie.db.global.trackerColorObjectives = value
-                    QuestieTracker:ResetLinesForFontChange();
-                    QuestieTracker:Update();
-                end
-            },]]--
+            
             colorObjectives = {
                 type = "select",
                 order = 8,

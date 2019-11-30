@@ -101,7 +101,6 @@ function QuestieAuto:IsBlocked()
     if npcGuid then
         local _, _, _, _, _, npcID = strsplit("-", npcGuid);
         npcID = tonumber(npcID);
-        -- Questie:Print(npcID, npcGuid, QuestieAuto.disallowedNPC[npcID]);
         if (QuestieAuto.disallowedNPC[npcID] ~= nil) then allowed = false end
     end
     local questId = GetQuestID();

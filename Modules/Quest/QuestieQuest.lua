@@ -1000,14 +1000,7 @@ function QuestieQuest:GetAllQuestObjectives(quest)
                                     oName = itemName;
                                 else
                                     oName = nil;
-                                    --[[
-                                    This is a good idea, but would require us to break out the objective identification code to a function
-                                    that runs a specific quest. I instead try to pre-cache the items in CacheAllItemNames
-                                    local item = Item:CreateFromItemID(objective.id);
-                                    item:ContinueOnItemLoad(function();
-                                        local itemName = GetItemInfo(objectiveDB.Id);
-                                        oName = itemName;
-                                    end)]]--
+                                   
                                 end
                             end
                         end
@@ -1107,20 +1100,6 @@ function QuestieQuest:GetAllQuestObjectives(quest)
     return quest.Objectives;
 end
 
---https://www.townlong-yak.com/framexml/live/Blizzard_APIDocumentation#C_QuestLog.GetQuestObjectives
---[[function _QuestieQuest:GetLeaderBoardDetails(objectiveIndex, questId)
-    local questObjectives = C_QuestLog.GetQuestObjectives(questId)-- or {};
-    if(questObjectives[objectiveIndex]) then
-        local objective = questObjectives[objectiveIndex];
-        local text = smatch(objective.text, "(.*)[：,:]");
-        -- If nothing is matched, we should just add the text as is.
-        if(text ~= nil) then
-            objective.text = text;
-        end
-        return objective.type, objective.text, objective.numFulfilled, objective.numRequired, objective.finished;
-    end
-    return nil;
-end]]--
 
 -- Link contains test bench for regex in lua.
 -- https://hastebin.com/anodilisuw.bash
@@ -1168,19 +1147,7 @@ function QuestieQuest:GetAllLeaderBoardDetails(questId)
     end
     return questObjectives;
 end
---[[  KEEP THIS FOR NOW
 
-            -- Look if it contains "slain"
-            if(smatch(text, slain)) then
-                --English first, chinese after
-                text = smatch(objective.text, "(.*)"..slain.."%W*%d+/%d+") or smatch(objective.text, "%d+/%d+%W*"..slain.."(.*)");
-                --Capital %W is required due to chinese not being alphanumerical
-                --text = smatch(objective.text, '^(.*)%s+%w+:%s') or smatch(objective.text, '%s：%W+%s(.+)$');
-            else
-                --English first, chinese after
-                text = smatch(objective.text, "^(.*):%s") or smatch(objective.text, "%s：(.*)$");
-            end
-]]--
 
 --Draw a single available quest, it is used by the DrawAllAvailableQuests function.
 function _QuestieQuest:DrawAvailableQuest(questObject) -- prevent recursion

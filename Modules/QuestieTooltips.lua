@@ -51,18 +51,6 @@ function QuestieTooltips:GetTooltip(key)
         return nil
     end
 
-    --Do not remove! This is the datastrucutre for tooltipData!
-    --[[tooltipdata[questId] = {
-        title = coloredTitle,
-        objectivesText = {
-            [objectiveIndex] = {
-                [playerName] = {
-                    [color] = color,
-                    [text] = text
-                }
-            }
-        }
-    }]]--
     local tooltipData = {}
 
     local name = UnitName("player");
@@ -158,17 +146,6 @@ function QuestieTooltips:GetTooltip(key)
         end
     end
     local tip = nil;
-    --[[tooltipdata[questId] = {
-    title = coloredTitle,
-    objectivesText = {
-        [objectiveIndex] = {
-            [playerName] = {
-                [color] = color,
-                [text] = text
-            }
-        }
-    }
-    }]]--
     for questId, questData in pairs(tooltipData) do
         --Initialize it here to return nil if tooltipData is empty.
         if(tip == nil) then

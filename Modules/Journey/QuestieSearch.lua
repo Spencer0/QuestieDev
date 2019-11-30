@@ -110,13 +110,6 @@ function QuestieSearch:Search(query, searchType, queryType)
         ((tonumber(query) ~= nil) and (queryLength >= minLengthInt));
     then
         database = actualDatabase;
-        -- We had a previous whole database search, we can use the smaller QuestieSearch.LastResult to search now
-        --[[if  ((tonumber(query) ~= nil) and (queryLength > minLengthInt));
-            or
-            ((queryLength > minLengthChars) and (queryLength > string.len(QuestieSearch.LastResult.query)));
-        then
-            database = QuestieSearch.LastResult[searchType];
-        end]]--
     end
     -- iterate the seleceted database
     local searchCount = 0;

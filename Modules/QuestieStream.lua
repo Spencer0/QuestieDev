@@ -165,21 +165,8 @@ function QuestieStreamLib:_ReadByte_raw()
     local val = string.byte(self._bin, self._pointer);
     self._pointer = self._pointer + 1
     return val
-    --return self:_readByte();
 end
 
--- this is now set in GetStream based on type
---function QuestieStreamLib:ReadByte()
---    local r = self._buffer[self._pointer];
---    self._pointer = self._pointer + 1;
---    return r
---end
---function QuestieStreamLib:WriteByte(val)
---    --print("wbyte: " .. val);
---    self._buffer[self._pointer] = mod(val, 256);
---    --print("wbyte: " .. _buffer[_pointer]);
---    self._pointer = self._pointer + 1;
---end
 
 
 function QuestieStreamLib:ReadBytes(count)
