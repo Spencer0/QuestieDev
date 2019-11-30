@@ -8,7 +8,7 @@ local QuestieOptionsUtils = QuestieLoader:ImportModule("QuestieOptionsUtils");
 ---@type QuestieTracker
 local QuestieTracker = QuestieLoader:ImportModule("QuestieTracker");
 ---@type QuestieQuestTimers
-local QuestieQuestTimers = QuestieLoader:ImportModule("QuestieQuestTimers")
+local QuestieQuestTimers = QuestieLoader:ImportModule("QuestieQuestTimers");
 
 QuestieOptions.tabs.tracker = {...}
 
@@ -37,19 +37,19 @@ function QuestieOptions.tabs.tracker:Initialize()
                     if value then
                         -- may not have been initialized yet
                         if Questie.db.global.hookTracking then
-                            QuestieTracker:HookBaseTracker()
+                            QuestieTracker:HookBaseTracker();
                         end
-                        QuestieQuestTimers:HideBlizzardTimer()
-                        QuestieTracker:Initialize()
-                        QuestieTracker:MoveDurabilityFrame()
+                        QuestieQuestTimers:HideBlizzardTimer();
+                        QuestieTracker:Initialize();
+                        QuestieTracker:MoveDurabilityFrame();
                     elseif Questie.db.global.hookTracking then
-                        QuestieTracker:Unhook()
+                        QuestieTracker:Unhook();
                     end
                     if not value then
-                        QuestieQuestTimers:ShowBlizzardTimer()
-                        QuestieTracker:ResetDurabilityFrame()
+                        QuestieQuestTimers:ShowBlizzardTimer();
+                        QuestieTracker:ResetDurabilityFrame();
                     end
-                    QuestieTracker:Update()
+                    QuestieTracker:Update();
                 end
             },
             autoQuestTracking = {
@@ -61,11 +61,11 @@ function QuestieOptions.tabs.tracker:Initialize()
                 get = function() return GetCVar("autoQuestWatch") == "1"; end,
                 set = function (info, value)
                     if value then
-                        SetCVar("autoQuestWatch", "1")
+                        SetCVar("autoQuestWatch", "1");
                     else
-                        SetCVar("autoQuestWatch", "0")
+                        SetCVar("autoQuestWatch", "0");
                     end
-                    QuestieTracker:Update()
+                    QuestieTracker:Update();
                 end
             },
             Spacer_F3 = QuestieOptionsUtils:Spacer(3.5, 0.001),
@@ -80,11 +80,11 @@ function QuestieOptions.tabs.tracker:Initialize()
                     Questie.db.global.hookTracking = value
                     if value then
                         -- may not have been initialized yet
-                        QuestieTracker:HookBaseTracker()
+                        QuestieTracker:HookBaseTracker();
                     else
-                        QuestieTracker:Unhook()
+                        QuestieTracker:Unhook();
                     end
-                    QuestieTracker:Update()
+                    QuestieTracker:Update();
                 end
             },
             showCompleteQuests = {
@@ -96,7 +96,7 @@ function QuestieOptions.tabs.tracker:Initialize()
                 get = function() return Questie.db.global.trackerShowCompleteQuests; end,
                 set = function (info, value)
                     Questie.db.global.trackerShowCompleteQuests = value
-                    QuestieTracker:Update()
+                    QuestieTracker:Update();
                 end
             },
             Spacer_F4 = QuestieOptionsUtils:Spacer(5.5, 0.001),
@@ -109,7 +109,7 @@ function QuestieOptions.tabs.tracker:Initialize()
                 get = function() return Questie.db.global.trackerShowQuestLevel; end,
                 set = function (info, value)
                     Questie.db.global.trackerShowQuestLevel = value
-                    QuestieTracker:Update()
+                    QuestieTracker:Update();
                 end
             },
             showCounter = {
@@ -121,8 +121,8 @@ function QuestieOptions.tabs.tracker:Initialize()
                 get = function() return Questie.db.global.trackerCounterEnabled; end,
                 set = function (info, value)
                     Questie.db.global.trackerCounterEnabled = value
-                    QuestieTracker:SetCounterEnabled(value)
-                    QuestieTracker:Update()
+                    QuestieTracker:SetCounterEnabled(value);
+                    QuestieTracker:Update();
                 end
             },
             Spacer_Q = QuestieOptionsUtils:Spacer(6.3, 0.001),
@@ -136,9 +136,9 @@ function QuestieOptions.tabs.tracker:Initialize()
                 set = function (info, value)
                     Questie.db.global.showBlizzardQuestTimer = value
                     if value then
-                        QuestieQuestTimers:ShowBlizzardTimer()
+                        QuestieQuestTimers:ShowBlizzardTimer();
                     else
-                        QuestieQuestTimers:HideBlizzardTimer()
+                        QuestieQuestTimers:HideBlizzardTimer();
                     end
                 end
             },
@@ -152,8 +152,8 @@ function QuestieOptions.tabs.tracker:Initialize()
                 get = function() return Questie.db.global.trackerColorObjectives end,
                 set = function (info, value)
                     Questie.db.global.trackerColorObjectives = value
-                    QuestieTracker:ResetLinesForFontChange()
-                    QuestieTracker:Update()
+                    QuestieTracker:ResetLinesForFontChange();
+                    QuestieTracker:Update();
                 end
             },]]--
             colorObjectives = {
@@ -163,15 +163,15 @@ function QuestieOptions.tabs.tracker:Initialize()
                     ['white'] = QuestieLocale:GetUIString('TRACKER_COLOR_WHITE'),
                     ['whiteToGreen'] = QuestieLocale:GetUIString('TRACKER_COLOR_WHITE_TO_GREEN'),
                     ['whiteAndGreen'] = QuestieLocale:GetUIString('TRACKER_COLOR_WHITE_AND_GREEN'),
-                    ['redToGreen'] = QuestieLocale:GetUIString('TRACKER_COLOR_RED_TO_GREEN')
+                    ['redToGreen'] = QuestieLocale:GetUIString('TRACKER_COLOR_RED_TO_GREEN');
                 } end,
                 style = 'dropdown',
                 name = function() return QuestieLocale:GetUIString('TRACKER_COLOR_OBJECTIVES'); end,
                 desc = function() return QuestieLocale:GetUIString('TRACKER_COLOR_OBJECTIVES_DESC'); end,
                 get = function() return Questie.db.global.trackerColorObjectives; end,
-                set = function(input, key)
+                set = function(input, key);
                     Questie.db.global.trackerColorObjectives = key
-                    QuestieTracker:Update()
+                    QuestieTracker:Update();
                 end,
             },
             sortObjectives = {
@@ -187,9 +187,9 @@ function QuestieOptions.tabs.tracker:Initialize()
                 name = function() return QuestieLocale:GetUIString('TRACKER_SORT_OBJECTIVES'); end,
                 desc = function() return QuestieLocale:GetUIString('TRACKER_SORT_OBJECTIVES_DESC'); end,
                 get = function() return Questie.db.global.trackerSortObjectives; end,
-                set = function(input, key)
+                set = function(input, key);
                     Questie.db.global.trackerSortObjectives = key
-                    QuestieTracker:Update()
+                    QuestieTracker:Update();
                 end,
             },
             Spacer_F2 = QuestieOptionsUtils:Spacer(9.1, 0.001),
@@ -201,7 +201,7 @@ function QuestieOptions.tabs.tracker:Initialize()
                 name = function() return QuestieLocale:GetUIString('TRACKER_SET_TOMTOM') .. QuestieLocale:GetUIString('TRACKER_SHORTCUT'); end,
                 desc = function() return QuestieLocale:GetUIString('TRACKER_SET_TOMTOM_DESC'); end,
                 get = function() return Questie.db.global.trackerbindSetTomTom; end,
-                set = function(input, key)
+                set = function(input, key);
                     Questie.db.global.trackerbindSetTomTom = key
                 end,
             },
@@ -213,7 +213,7 @@ function QuestieOptions.tabs.tracker:Initialize()
                 name = function() return QuestieLocale:GetUIString('TRACKER_SHOW_QUESTLOG') .. QuestieLocale:GetUIString('TRACKER_SHORTCUT'); end,
                 desc = function() return QuestieLocale:GetUIString('TRACKER_SHOW_QUESTLOG_DESC'); end,
                 get = function() return Questie.db.global.trackerbindOpenQuestLog; end,
-                set = function(input, key)
+                set = function(input, key);
                     Questie.db.global.trackerbindOpenQuestLog = key
                 end,
             },
@@ -226,7 +226,7 @@ function QuestieOptions.tabs.tracker:Initialize()
                 name = function() return QuestieLocale:GetUIString('TRACKER_UNTRACK') .. QuestieLocale:GetUIString('TRACKER_SHORTCUT'); end,
                 desc = function() return QuestieLocale:GetUIString('TRACKER_UNTRACK_DESC'); end,
                 get = function() return Questie.db.global.trackerbindUntrack; end,
-                set = function(input, key)
+                set = function(input, key);
                     Questie.db.global.trackerbindUntrack = key
                 end,
             },
@@ -244,8 +244,8 @@ function QuestieOptions.tabs.tracker:Initialize()
                 get = function() return Questie.db.global.trackerFontSizeHeader; end,
                 set = function (info, value)
                     Questie.db.global.trackerFontSizeHeader = value
-                    QuestieTracker:ResetLinesForFontChange()
-                    QuestieTracker:Update()
+                    QuestieTracker:ResetLinesForFontChange();
+                    QuestieTracker:Update();
                 end,
             },
             fontSizeLine = {
@@ -260,8 +260,8 @@ function QuestieOptions.tabs.tracker:Initialize()
                 get = function() return Questie.db.global.trackerFontSizeLine; end,
                 set = function (info, value)
                     Questie.db.global.trackerFontSizeLine = value
-                    QuestieTracker:ResetLinesForFontChange()
-                    QuestieTracker:Update()
+                    QuestieTracker:ResetLinesForFontChange();
+                    QuestieTracker:Update();
                 end,
             },
             questPadding = {
@@ -276,7 +276,7 @@ function QuestieOptions.tabs.tracker:Initialize()
                 get = function() return Questie.db.global.trackerQuestPadding; end,
                 set = function (info, value)
                     Questie.db.global.trackerQuestPadding = value
-                    QuestieTracker:Update()
+                    QuestieTracker:Update();
                 end,
             },
             Spacer_B = QuestieOptionsUtils:Spacer(98, 5),
@@ -287,14 +287,14 @@ function QuestieOptions.tabs.tracker:Initialize()
                 desc = function() return QuestieLocale:GetUIString('TRACKER_RESET_LOCATION_DESC'); end,
                 disabled = function() return false; end,
                 func = function (info, value)
-                    QuestieTracker:ResetLocation()
+                    QuestieTracker:ResetLocation();
                 end,
             }
         }
     }
 end
 
-_GetShortcuts = function()
+_GetShortcuts = function();
     return {
         ['left'] = QuestieLocale:GetUIString('TRACKER_LEFT_CLICK'),
         ['right'] = QuestieLocale:GetUIString('TRACKER_RIGHT_CLICK'),

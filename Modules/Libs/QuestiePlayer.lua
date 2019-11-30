@@ -4,7 +4,7 @@ local QuestiePlayer = QuestieLoader:CreateModule("QuestiePlayer");
 --Import modules.
 -------------------------
 ---@type QuestieDBZone
-local QuestieDBZone = QuestieLoader:ImportModule("QuestieDBZone")
+local QuestieDBZone = QuestieLoader:ImportModule("QuestieDBZone");
 
 local _QuestiePlayer = {...};
 
@@ -15,7 +15,7 @@ _QuestiePlayer.playerLevel = -1
 local math_max = math.max;
 
 function QuestiePlayer:Initialize()
-    _QuestiePlayer.playerLevel = UnitLevel("player")
+    _QuestiePlayer.playerLevel = UnitLevel("player");
 end
 
 --Always compare to the UnitLevel parameter, returning the highest.
@@ -42,11 +42,11 @@ function QuestiePlayer:GetGroupType()
 end
 
 function QuestiePlayer:GetCurrentZoneId()
-    return QuestieDBZone:GetAreaIdByUIMapID(C_Map.GetBestMapForUnit("player"))
+    return QuestieDBZone:GetAreaIdByUIMapID(C_Map.GetBestMapForUnit("player"));
 end
 
 function QuestiePlayer:GetCurrentContinentId()
-    local currentZoneId = QuestiePlayer:GetCurrentZoneId()
+    local currentZoneId = QuestiePlayer:GetCurrentZoneId();
     if currentZoneId == 0 then
         return 0
     end
@@ -63,7 +63,7 @@ function QuestiePlayer:GetCurrentContinentId()
 end
 
 function QuestiePlayer:GetPartyMembers()
-    local partyMembers = GetHomePartyInfo()
+    local partyMembers = GetHomePartyInfo();
     if partyMembers then
         local party = {}
         for _, v in pairs(partyMembers) do
@@ -96,7 +96,7 @@ function QuestiePlayer:GetPartyMemberByName(playerName)
             if(name == playerName) then
                 player.name = playerName;
                 player.class = classFilename;
-                local rPerc, gPerc, bPerc, argbHex = GetClassColor(classFilename)
+                local rPerc, gPerc, bPerc, argbHex = GetClassColor(classFilename);
                 player.r = rPerc;
                 player.g = gPerc;
                 player.b = bPerc;

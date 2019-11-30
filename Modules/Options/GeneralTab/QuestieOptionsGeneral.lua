@@ -17,7 +17,7 @@ local QuestieFramePool = QuestieLoader:ImportModule("QuestieFramePool");
 local QuestiePlayer = QuestieLoader:ImportModule("QuestiePlayer");
 
 QuestieOptions.tabs.general = {...}
-local optionsDefaults = QuestieOptionsDefaults:Load()
+local optionsDefaults = QuestieOptionsDefaults:Load();
 
 
 function QuestieOptions.tabs.general:Initialize()
@@ -97,7 +97,7 @@ function QuestieOptions.tabs.general:Initialize()
                         width = "full",
                         disabled = function() return (not Questie.db.char.enabled); end,
                         get = function() return Questie.db.global.hideUnexploredMapIcons; end,
-                        set = function(info, value)
+                        set = function(info, value);
                             Questie.db.global.hideUnexploredMapIcons = value
                             QuestieQuest:Reset();
                         end,
@@ -154,7 +154,7 @@ function QuestieOptions.tabs.general:Initialize()
                         width = 1.5,
                         get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                         set = function (info, value)
-                            QuestieOptions:SetGlobalOptionValue(info, value)
+                            QuestieOptions:SetGlobalOptionValue(info, value);
                             QuestieQuest:Reset();
                         end,
                     },
@@ -215,7 +215,7 @@ function QuestieOptions.tabs.general:Initialize()
                     Questie.db.global.enableTooltipsQuestLevel = value
                     if value and not Questie.db.global.trackerShowQuestLevel then
                         Questie.db.global.trackerShowQuestLevel = true
-                        QuestieTracker:Update()
+                        QuestieTracker:Update();
                     end
                 end
             },
@@ -228,7 +228,7 @@ function QuestieOptions.tabs.general:Initialize()
                 get = function () return Questie.db.char.autoaccept; end,
                 set = function (info, value)
                     Questie.db.char.autoaccept = value
-                    Questie:debug(DEBUG_DEVELOP, "Auto Accept toggled to:", value)
+                    Questie:debug(DEBUG_DEVELOP, "Auto Accept toggled to:", value);
                 end,
             },
             autocomplete = {
@@ -240,7 +240,7 @@ function QuestieOptions.tabs.general:Initialize()
                 get = function () return Questie.db.char.autocomplete; end,
                 set = function (info, value)
                     Questie.db.char.autocomplete = value
-                    Questie:debug(DEBUG_DEVELOP, "Auto Complete toggled to:", value)
+                    Questie:debug(DEBUG_DEVELOP, "Auto Complete toggled to:", value);
                 end,
             },
             --Spacer_A = _QuestieOptions:Spacer(9),
@@ -260,7 +260,7 @@ function QuestieOptions.tabs.general:Initialize()
                 set = function (info, value)
                     Questie.db.char.lowlevel = value
                     QuestieOptions.AvailableQuestRedraw();
-                    Questie:debug(DEBUG_DEVELOP, QuestieLocale:GetUIString('DEBUG_LOWLEVEL'), value)
+                    Questie:debug(DEBUG_DEVELOP, QuestieLocale:GetUIString('DEBUG_LOWLEVEL'), value);
                 end,
             },
             manualMinLevelOffset = {
@@ -274,7 +274,7 @@ function QuestieOptions.tabs.general:Initialize()
                 set = function (info, value)
                     Questie.db.char.manualMinLevelOffset = value
                     QuestieOptions.AvailableQuestRedraw();
-                    Questie:debug(DEBUG_DEVELOP, QuestieLocale:GetUIString('ENABLE_MANUAL_OFFSET'), value)
+                    Questie:debug(DEBUG_DEVELOP, QuestieLocale:GetUIString('ENABLE_MANUAL_OFFSET'), value);
                 end,
             },
             minLevelFilter = {
@@ -286,7 +286,7 @@ function QuestieOptions.tabs.general:Initialize()
                 min = 0,
                 max = QuestiePlayer:GetPlayerLevel() - 1,
                 step = 1,
-                disabled = function()
+                disabled = function();
                     if(Questie.db.char.manualMinLevelOffset and not Questie.db.char.lowlevel) then
                         return false;
                     else
@@ -295,8 +295,8 @@ function QuestieOptions.tabs.general:Initialize()
                 end,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
-                    QuestieOptionsUtils:Delay(0.3, QuestieOptions.AvailableQuestRedraw, QuestieLocale:GetUIString('DEBUG_MINLEVEL', value))
+                    QuestieOptions:SetGlobalOptionValue(info, value);
+                    QuestieOptionsUtils:Delay(0.3, QuestieOptions.AvailableQuestRedraw, QuestieLocale:GetUIString('DEBUG_MINLEVEL', value));
                 end,
             },
             maxLevelFilter = {
@@ -311,8 +311,8 @@ function QuestieOptions.tabs.general:Initialize()
                 disabled = function() return QuestiePlayer:GetPlayerLevel() == 60; end,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
-                    QuestieOptionsUtils:Delay(0.3, QuestieOptions.AvailableQuestRedraw, QuestieLocale:GetUIString('DEBUG_MAXLEVEL', value))
+                    QuestieOptions:SetGlobalOptionValue(info, value);
+                    QuestieOptionsUtils:Delay(0.3, QuestieOptions.AvailableQuestRedraw, QuestieLocale:GetUIString('DEBUG_MAXLEVEL', value));
                 end,
             },
             clusterLevelHotzone = {
@@ -327,8 +327,8 @@ function QuestieOptions.tabs.general:Initialize()
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
                     QUESTIE_CLUSTER_DISTANCE = value;
-                    QuestieOptionsUtils:Delay(0.5, QuestieOptions.ClusterRedraw, QuestieLocale:GetUIString('DEBUG_CLUSTER', value))
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieOptionsUtils:Delay(0.5, QuestieOptions.ClusterRedraw, QuestieLocale:GetUIString('DEBUG_CLUSTER', value));
+                    QuestieOptions:SetGlobalOptionValue(info, value);
                 end,
             },
         },

@@ -1,18 +1,18 @@
 ---@type QuestieQuest
-local QuestieQuest = QuestieLoader:ImportModule("QuestieQuest")
+local QuestieQuest = QuestieLoader:ImportModule("QuestieQuest");
 local _QuestieQuest = QuestieQuest.private
 
 ---@type QuestieDB
-local QuestieDB = QuestieLoader:ImportModule("QuestieDB")
+local QuestieDB = QuestieLoader:ImportModule("QuestieDB");
 ---@type QuestieDBZone
-local QuestieDBZone = QuestieLoader:ImportModule("QuestieDBZone")
+local QuestieDBZone = QuestieLoader:ImportModule("QuestieDBZone");
 ---@type QuestiePlayer
-local QuestiePlayer = QuestieLoader:ImportModule("QuestiePlayer")
+local QuestiePlayer = QuestieLoader:ImportModule("QuestiePlayer");
 
 
 _QuestieQuest.objectiveSpawnListCallTable = {
-    ["monster"] = function(id, Objective)
-        local npc = QuestieDB:GetNPC(id)
+    ["monster"] = function(id, Objective);
+        local npc = QuestieDB:GetNPC(id);
         if not npc then
             -- todo: log this
             return nil
@@ -31,8 +31,8 @@ _QuestieQuest.objectiveSpawnListCallTable = {
         ret[id] = mon;
         return ret
     end,
-    ["object"] = function(id, Objective)
-        local object = QuestieDB:GetObject(id)
+    ["object"] = function(id, Objective);
+        local object = QuestieDB:GetObject(id);
         if not object then
             -- todo: log this
             return nil
@@ -44,14 +44,14 @@ _QuestieQuest.objectiveSpawnListCallTable = {
         obj.Spawns = object.spawns
         obj.Icon = ICON_TYPE_LOOT
         obj.GetIconScale = function() return Questie.db.global.objectScale or 1 end
-        obj.IconScale = obj:GetIconScale()
+        obj.IconScale = obj:GetIconScale();
         obj.TooltipKey = "o_" .. id
         obj.Id = id
 
         ret[id] = obj
         return ret
     end,
-    ["event"] = function(id, Objective)
+    ["event"] = function(id, Objective);
         local ret = {}
         ret[1] = {};
         ret[1].Name = Objective.Description or "Event Trigger";
@@ -68,7 +68,7 @@ _QuestieQuest.objectiveSpawnListCallTable = {
                 for i, spawn in pairs(questie2data["locations"]) do
                     local zid = Questie2ZoneTableInverse[spawn[1]];
                     if zid then
-                        zid = QuestieDBZone:GetAreaIdByUIMapID(zid)
+                        zid = QuestieDBZone:GetAreaIdByUIMapID(zid);
                         if zid then
                             if not ret[1].Spawns[zid] then
                                 ret[1].Spawns[zid] = {};
@@ -83,7 +83,7 @@ _QuestieQuest.objectiveSpawnListCallTable = {
         end
         return ret
     end,
-    ["item"] = function(id, Objective)
+    ["item"] = function(id, Objective);
         local ret = {};
         local item = QuestieDB:GetItem(id);
         if item ~= nil and item.Sources ~= nil then
@@ -101,11 +101,11 @@ _QuestieQuest.objectiveSpawnListCallTable = {
                                 if source.Type == "object" then
                                     ret[id].Icon = ICON_TYPE_OBJECT
                                     ret[id].GetIconScale = function() return Questie.db.global.objectScale or 1 end
-                                    ret[id].IconScale = ret[id]:GetIconScale()
+                                    ret[id].IconScale = ret[id]:GetIconScale();
                                 else
                                     ret[id].Icon = ICON_TYPE_LOOT
                                     ret[id].GetIconScale = function() return Questie.db.global.lootScale or 1 end
-                                    ret[id].IconScale = ret[id]:GetIconScale()
+                                    ret[id].IconScale = ret[id]:GetIconScale();
                                 end
                                 ret[id].TooltipKey = sourceData.TooltipKey
                                 ret[id].Id = id

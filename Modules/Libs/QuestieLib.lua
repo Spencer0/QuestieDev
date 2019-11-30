@@ -21,7 +21,7 @@ local tinsert = table.insert
     Red: 5+ level above player
     Orange: 3 - 4 level above player
     Yellow: max 2 level below/above player
-    Green: 3 - GetQuestGreenRange() level below player (GetQuestGreenRange() changes on specific player levels)
+    Green: 3 - GetQuestGreenRange() level below player (GetQuestGreenRange() changes on specific player levels);
     Gray: More than GetQuestGreenRange() below player
 --]]
 function QuestieLib:PrintDifficultyColor(level, text)
@@ -94,7 +94,7 @@ function QuestieLib:GetRGBForObjective(objective)
     if not trackerColor or trackerColor == "white" then
         return "|cFFEEEEEE";
     elseif trackerColor == "whiteAndGreen" then
-        return objective.Collected == objective.Needed and RGBToHex(76, 255, 76) or FloatRGBToHex(0.8, 0.8, 0.8)
+        return objective.Collected == objective.Needed and RGBToHex(76, 255, 76) or FloatRGBToHex(0.8, 0.8, 0.8);
     elseif trackerColor == "whiteToGreen" then
         return FloatRGBToHex(0.8 - float / 2, 0.8 + float / 3, 0.8 - float / 2);
     else
@@ -163,7 +163,7 @@ end
 ---@param blizzLike boolean @True = [40+], false/nil = [40D/R]
 function QuestieLib:GetColoredQuestName(id, name, level, showLevel, isComplete, blizzLike)
     if showLevel then
-        local questType, questTag = GetQuestTagInfo(id)
+        local questType, questTag = GetQuestTagInfo(id);
 
         if questType and questTag then
             local char = "+"
@@ -206,7 +206,7 @@ function QuestieLib:GetColoredQuestName(id, name, level, showLevel, isComplete, 
         name = name .. " (" .. _G['COMPLETE'] .. ")"
     end
 
-    return QuestieLib:PrintDifficultyColor(level, name)
+    return QuestieLib:PrintDifficultyColor(level, name);
 end
 
 ---@param waypointTable table<integer, Point> @A table containing waypoints {{X, Y}, ...}
@@ -270,7 +270,7 @@ function QuestieLib:CacheAllItemNames()
     ]]
     local numEntries, numQuests = GetNumQuestLogEntries();
     for index = 1, numEntries do
-        local title, level, _, isHeader, _, isComplete, _, questId, _, displayQuestId, _, _, _, _, _, _, _ = GetQuestLogTitle(index)
+        local title, level, _, isHeader, _, isComplete, _, questId, _, displayQuestId, _, _, _, _, _, _, _ = GetQuestLogTitle(index);
         if(not isHeader) then
             QuestieLib:CacheItemNames(questId);
         end
@@ -283,15 +283,15 @@ function QuestieLib:CacheItemNames(questId)
         for objectiveIndexDB, objectiveDB in pairs(quest.ObjectiveData) do
             if objectiveDB.Type == "item" then
                 if not QuestieDB.itemData[objectiveDB.Id] then
-                    Questie:Debug(DEBUG_DEVELOP, "Requesting item information for missing itemId:", objectiveDB.Id)
-                    local item = Item:CreateFromItemID(objectiveDB.Id)
-                    item:ContinueOnItemLoad(function()
+                    Questie:Debug(DEBUG_DEVELOP, "Requesting item information for missing itemId:", objectiveDB.Id);
+                    local item = Item:CreateFromItemID(objectiveDB.Id);
+                    item:ContinueOnItemLoad(function();
                         local itemName = item:GetItemName();
-                        --local itemName = GetItemInfo(objectiveDB.Id)
+                        --local itemName = GetItemInfo(objectiveDB.Id);
                         --Create an empty item with the name itself but no drops.
                         QuestieDB.itemData[objectiveDB.Id] = {itemName,{questId},{},{}};
                         Questie:Debug(DEBUG_DEVELOP, "Created item information for item:", itemName, ":", objectiveDB.Id);
-                    end)
+                    end);
                 end
             end
         end
@@ -305,7 +305,7 @@ function QuestieLib:Euclid(x, y, i, e)
 end
 
 function QuestieLib:Maxdist(x, y, i, e)
-    return math_max(math_abs(x - i), math_abs(y - e))
+    return math_max(math_abs(x - i), math_abs(y - e));
 end
 
 function QuestieLib:Remap(value, low1, high1, low2, high2)
@@ -328,14 +328,14 @@ function QuestieLib:GetAddonVersionInfo()  -- todo: better place
 end
 
 function QuestieLib:GetAddonVersionString()
-    local major, minor, patch = QuestieLib:GetAddonVersionInfo()
-    return "v" .. tostring(major) .. "." .. tostring(minor) .. "." .. tostring(patch)
+    local major, minor, patch = QuestieLib:GetAddonVersionInfo();
+    return "v" .. tostring(major) .. "." .. tostring(minor) .. "." .. tostring(patch);
 end
 
 --Search for just Addon\\ at the front since the interface part often gets trimmed
 --Code Credit Author(s): Cryect (cryect@gmail.com), Xinhuan and their LibGraph-2.0 
 do
-    local path = string.match(debugstack(1, 1, 0), "AddOns\\(.+)Modules\\Libs\\QuestieLib.lua")
+    local path = string.match(debugstack(1, 1, 0), "AddOns\\(.+)Modules\\Libs\\QuestieLib.lua");
     if path then
         QuestieLib.AddonPath = "Interface\\AddOns\\"..path
   else
@@ -357,15 +357,15 @@ function QuestieLib:SanitizePattern(pattern)
   if not sanitize_cache[pattern] then
     local ret = pattern
     -- escape magic characters
-    ret = gsub(ret, "([%+%-%*%(%)%?%[%]%^])", "%%%1")
+    ret = gsub(ret, "([%+%-%*%(%)%?%[%]%^])", "%%%1");
     -- remove capture indexes
-    ret = gsub(ret, "%d%$","")
+    ret = gsub(ret, "%d%$","");
     -- catch all characters
-    ret = gsub(ret, "(%%%a)","%(%1+%)")
+    ret = gsub(ret, "(%%%a)","%(%1+%)");
     -- convert all %s to .+
-    ret = gsub(ret, "%%s%+",".+")
+    ret = gsub(ret, "%%s%+",".+");
     -- set priority to numbers over strings
-    ret = gsub(ret, "%(.%+%)%(%%d%+%)","%(.-%)%(%%d%+%)")
+    ret = gsub(ret, "%(.%+%)%(%%d%+%)","%(.-%)%(%%d%+%)");
     -- cache it
     sanitize_cache[pattern] = ret
   end
@@ -381,9 +381,9 @@ function QuestieLib:SortQuestsByLevel(quests)
     end
 
     for _, q in pairs(quests) do
-        tinsert(sortedQuestsByLevel, {q.questLevel, q})
+        tinsert(sortedQuestsByLevel, {q.questLevel, q});
     end
-    table.sort(sortedQuestsByLevel, compareTablesByIndex)
+    table.sort(sortedQuestsByLevel, compareTablesByIndex);
 
     return sortedQuestsByLevel
 end
@@ -392,8 +392,8 @@ end
 -- Returns the Levenshtein distance between the two given strings
 -- credit to https://gist.github.com/Badgerati/3261142
 function QuestieLib:Levenshtein(str1, str2)
-    local len1 = string.len(str1)
-    local len2 = string.len(str2)
+    local len1 = string.len(str1);
+    local len2 = string.len(str2);
     local matrix = {}
     local cost = 0
     -- quick cut-offs to save time
@@ -420,7 +420,7 @@ function QuestieLib:Levenshtein(str1, str2)
             else
                 cost = 1
             end
-            matrix[i][j] = math.min(matrix[i-1][j] + 1, matrix[i][j-1] + 1, matrix[i-1][j-1] + cost)
+            matrix[i][j] = math.min(matrix[i-1][j] + 1, matrix[i][j-1] + 1, matrix[i-1][j-1] + cost);
         end
     end
     -- return the last value - this is the Levenshtein distance
@@ -450,5 +450,5 @@ function QuestieLib:MathRandom(low_or_high_arg, high_arg)
     if high == nil then
         return rand
     end
-    return low + math.floor(rand * high)
+    return low + math.floor(rand * high);
 end

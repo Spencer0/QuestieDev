@@ -3,9 +3,9 @@ local QuestieCompress = {...};
 QuestieLoader:CreateModule("QuestieCompress", QuestieCompress);
 
 local _QuestieCompress = {...};
-local libS = LibStub:GetLibrary("AceSerializer-3.0")
-local libC = LibStub:GetLibrary("LibCompress")
-local libCE = libC:GetAddonEncodeTable()
+local libS = LibStub:GetLibrary("AceSerializer-3.0");
+local libC = LibStub:GetLibrary("LibCompress");
+local libCE = libC:GetAddonEncodeTable();
 
 -- What compression method should be used?
 QuestieCompress.method = 10;
@@ -42,7 +42,7 @@ function QuestieCompress:Decompress(data)
     -- Get compression method
     local header_info = string.byte(decodedData);
     -- Strip compression method char
-    decodedData = decodedData:sub(2)
+    decodedData = decodedData:sub(2);
     return _QuestieCompress.compressionMethods[header_info](decodedData);
 end
 
@@ -65,9 +65,9 @@ function _QuestieCompress:LibAceDecompress(decodedData)
         error("QuestieCompress:Decompress -> Decompression failed : " .. message);
     end
     -- Deserialize the decompressed data
-    local success, deserializedData = libS:Deserialize(decompressedData)
+    local success, deserializedData = libS:Deserialize(decompressedData);
     if (not success) then
-        print("QuestieCompress:Decompress -> error deserializing " .. deserializedData)
+        print("QuestieCompress:Decompress -> error deserializing " .. deserializedData);
         return
     end
     return decompressedData;

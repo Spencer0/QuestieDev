@@ -88,12 +88,12 @@ end
 ---------
 -- Fetch quest information about a specific player.
 -- Params:
---  questId (int)
+--  questId (int);
 --  playerName (string) OPTIONAL
 -- Return:
---  Similar object as QuestieQuest:GetRawLeaderBoardDetails()
+--  Similar object as QuestieQuest:GetRawLeaderBoardDetails();
 --  Quest.(Id|level|isComplete) --title is trimmed to save space
---  Quest.Objectives[index].(description|objectiveType|isCompleted)
+--  Quest.Objectives[index].(description|objectiveType|isCompleted);
 ---------
 --Only questid gets all players with that quest and their progress
 --Both name and questid returns a specific players progress if one exist.
@@ -134,7 +134,7 @@ function QuestieComms:Initialize()
   -- Responds to the "hi" event from others.
   Questie:RegisterMessage("QC_ID_REQUEST_FULL_QUESTLIST", _QuestieComms.RequestQuestLog);
 
-  QuestieEventHandler:GROUP_JOINED()
+  QuestieEventHandler:GROUP_JOINED();
 end
 
 -- Local Functions --
@@ -142,11 +142,11 @@ end
 function _QuestieComms:BroadcastQuestUpdate(questId) -- broadcast quest update to group or raid
     Questie:Debug(DEBUG_DEVELOP, "[QuestieComms] Questid", questId, tostring(questId));
     if(questId) then
-        local partyType = QuestiePlayer:GetGroupType()
+        local partyType = QuestiePlayer:GetGroupType();
         Questie:Debug(DEBUG_DEVELOP, "[QuestieComms] partyType", tostring(partyType));
         if partyType then
             --Do we really need to make this?
-            local questPacket = _QuestieComms:createPacket(_QuestieComms.QC_ID_BROADCAST_QUEST_UPDATE)
+            local questPacket = _QuestieComms:createPacket(_QuestieComms.QC_ID_BROADCAST_QUEST_UPDATE);
 
             local quest = QuestieComms:CreateQuestDataPacket(questId);
 
@@ -157,14 +157,14 @@ function _QuestieComms:BroadcastQuestUpdate(questId) -- broadcast quest update t
             else
                 questPacket.data.writeMode = _QuestieComms.QC_WRITE_ALLGROUP
             end
-            questPacket:write()
+            questPacket:write();
         end
     end
 end
 
 -- Removes the quest from everyones external quest-log
 function _QuestieComms:BroadcastQuestRemove(questId) -- broadcast quest update to group or raid
-    local partyType = QuestiePlayer:GetGroupType()
+    local partyType = QuestiePlayer:GetGroupType();
     Questie:Debug(DEBUG_DEVELOP, "[QuestieComms] QuestID:", questId, "partyType:", tostring(partyType));
     if partyType then
         --Do we really need to make this?
@@ -184,14 +184,14 @@ function _QuestieComms:BroadcastQuestRemove(questId) -- broadcast quest update t
 end
 
 function _QuestieComms:BroadcastQuestLog(eventName) -- broadcast quest update to group or raid
-    local partyType = QuestiePlayer:GetGroupType()
+    local partyType = QuestiePlayer:GetGroupType();
     Questie:Debug(DEBUG_DEVELOP, "[QuestieComms] Message", eventName, "partyType:", tostring(partyType));
     if partyType then
         local rawQuestList = {}
         -- Maybe this should be its own function in QuestieQuest...
         local numEntries, numQuests = GetNumQuestLogEntries();
         for index = 1, numEntries do
-            local _, _, _, isHeader, _, _, _, questId, _, _, _, _, _, _, _, _, _ = GetQuestLogTitle(index)
+            local _, _, _, isHeader, _, _, _, questId, _, _, _, _, _, _, _, _, _ = GetQuestLogTitle(index);
             if(not isHeader) then
                 -- The id is not needed due to it being used as a key, but send it anyway to keep the same structure.
                 local quest = QuestieComms:CreateQuestDataPacket(questId);
@@ -217,7 +217,7 @@ end
 
 -- The "Hi" of questie, request others to send their questlog.
 function _QuestieComms:RequestQuestLog(eventName) -- broadcast quest update to group or raid
-    local partyType = QuestiePlayer:GetGroupType()
+    local partyType = QuestiePlayer:GetGroupType();
     Questie:Debug(DEBUG_DEVELOP, "[QuestieComms] Message", eventName, "partyType:", tostring(partyType));
     if partyType then
         --Do we really need to make this?
@@ -295,11 +295,11 @@ end
 
 _QuestieComms.packets = {
     [_QuestieComms.QC_ID_BROADCAST_QUEST_UPDATE] = { --1
-        write = function(self)
-            Questie:Debug(DEBUG_INFO, "[QuestieComms]", "Sending: QC_ID_BROADCAST_QUEST_UPDATE")
+        write = function(self);
+            Questie:Debug(DEBUG_INFO, "[QuestieComms]", "Sending: QC_ID_BROADCAST_QUEST_UPDATE");
             _QuestieComms:broadcast(self.data);
         end,
-        read = function(remoteQuestPacket)
+        read = function(remoteQuestPacket);
             if(remoteQuestPacket == nil) then
                 Questie:Error("[QuestieComms]", "QC_ID_BROADCAST_QUEST_UPDATE", "remoteQuestPacket = nil");
             end
@@ -307,21 +307,21 @@ _QuestieComms.packets = {
             local playerName = remoteQuestPacket.playerName;
             local quest = remoteQuestPacket.quest;
 
-            Questie:Debug(DEBUG_INFO, "[QuestieComms]", "Received: QC_ID_BROADCAST_QUEST_UPDATE", "Player:", playerName)
+            Questie:Debug(DEBUG_INFO, "[QuestieComms]", "Received: QC_ID_BROADCAST_QUEST_UPDATE", "Player:", playerName);
 
             QuestieComms:InsertQuestDataPacket(quest, playerName);
         end
     },
     [_QuestieComms.QC_ID_BROADCAST_QUEST_REMOVE] = { --2
-      write = function(self)
-        Questie:Debug(DEBUG_INFO, "[QuestieComms]", "Sending: QC_ID_BROADCAST_QUEST_REMOVE")
+      write = function(self);
+        Questie:Debug(DEBUG_INFO, "[QuestieComms]", "Sending: QC_ID_BROADCAST_QUEST_REMOVE");
         _QuestieComms:broadcast(self.data);
       end,
-      read = function(remoteQuestPacket)
+      read = function(remoteQuestPacket);
         if(remoteQuestPacket == nil) then
             Questie:Error("[QuestieComms]", "QC_ID_BROADCAST_QUEST_REMOVE", "remoteQuestPacket = nil");
         end
-        Questie:Debug(DEBUG_DEVELOP, "[QuestieComms]", "Received: QC_ID_BROADCAST_QUEST_REMOVE")
+        Questie:Debug(DEBUG_DEVELOP, "[QuestieComms]", "Received: QC_ID_BROADCAST_QUEST_REMOVE");
 
         local playerName = remoteQuestPacket.playerName;
         local questId = remoteQuestPacket.id;
@@ -334,11 +334,11 @@ _QuestieComms.packets = {
       end
     },
     [_QuestieComms.QC_ID_BROADCAST_FULL_QUESTLIST] = { --10
-        write = function(self)
-            Questie:Debug(DEBUG_INFO, "[QuestieComms]", "Sending: QC_ID_BROADCAST_FULL_QUESTLIST")
+        write = function(self);
+            Questie:Debug(DEBUG_INFO, "[QuestieComms]", "Sending: QC_ID_BROADCAST_FULL_QUESTLIST");
             _QuestieComms:broadcast(self.data);
         end,
-        read = function(remoteQuestList)
+        read = function(remoteQuestList);
             if(remoteQuestList == nil) then
                 Questie:Error("[QuestieComms]", "QC_ID_BROADCAST_FULL_QUESTLIST", "remoteQuestList = nil");
             end
@@ -346,7 +346,7 @@ _QuestieComms.packets = {
             local playerName = remoteQuestList.playerName;
             local questList = remoteQuestList.rawQuestList;
 
-            Questie:Debug(DEBUG_INFO, "[QuestieComms]", "Received: QC_ID_BROADCAST_FULL_QUESTLIST", "Player:", playerName, questList)
+            Questie:Debug(DEBUG_INFO, "[QuestieComms]", "Received: QC_ID_BROADCAST_FULL_QUESTLIST", "Player:", playerName, questList);
 
             --Don't save our own quests.
             if questList then
@@ -357,12 +357,12 @@ _QuestieComms.packets = {
         end
     },
     [_QuestieComms.QC_ID_REQUEST_FULL_QUESTLIST] = { --11
-        write = function(self)
-            Questie:Debug(DEBUG_INFO, "[QuestieComms]", "Sending: QC_ID_REQUEST_FULL_QUESTLIST")
+        write = function(self);
+            Questie:Debug(DEBUG_INFO, "[QuestieComms]", "Sending: QC_ID_REQUEST_FULL_QUESTLIST");
             _QuestieComms:broadcast(self.data);
         end,
-        read = function(self)
-            Questie:Debug(DEBUG_INFO, "[QuestieComms]", "Received: QC_ID_REQUEST_FULL_QUESTLIST")
+        read = function(self);
+            Questie:Debug(DEBUG_INFO, "[QuestieComms]", "Received: QC_ID_REQUEST_FULL_QUESTLIST");
             Questie:SendMessage("QC_ID_BROADCAST_FULL_QUESTLIST");
         end
     },
@@ -377,22 +377,22 @@ function _QuestieComms:broadcast(packet)
     
     local compressedData = QuestieSerializer:Serialize(packet);--QuestieCompress:Compress(packet);
     if packet.writeMode == _QuestieComms.QC_WRITE_WHISPER then
-        Questie:Debug(DEBUG_DEVELOP,"send(|cFFFF2222" ..string.len(compressedData) .. "|r)")
-        Questie:SendCommMessage(_QuestieComms.prefix, compressedData, packet.writeMode, packet.target, packet.priority)
+        Questie:Debug(DEBUG_DEVELOP,"send(|cFFFF2222" ..string.len(compressedData) .. "|r)");
+        Questie:SendCommMessage(_QuestieComms.prefix, compressedData, packet.writeMode, packet.target, packet.priority);
     elseif packet.writeMode == _QuestieComms.QC_WRITE_CHANNEL then
-        Questie:Debug(DEBUG_DEVELOP,"send(|cFFFF2222" ..string.len(compressedData) .. "|r)")
+        Questie:Debug(DEBUG_DEVELOP,"send(|cFFFF2222" ..string.len(compressedData) .. "|r)");
         -- Always do channel messages as BULK priority
-        Questie:SendCommMessage(_QuestieComms.prefix, compressedData, packet.writeMode, GetChannelName("questiecom"), "BULK")
-        --OLD: C_ChatInfo.SendAddonMessage("questie", compressedData, "CHANNEL", GetChannelName("questiecom"))
+        Questie:SendCommMessage(_QuestieComms.prefix, compressedData, packet.writeMode, GetChannelName("questiecom"), "BULK");
+        --OLD: C_ChatInfo.SendAddonMessage("questie", compressedData, "CHANNEL", GetChannelName("questiecom"));
     else
-        Questie:Debug(DEBUG_DEVELOP, "send(|cFFFF2222" ..string.len(compressedData) .. "|r)")
-        Questie:SendCommMessage(_QuestieComms.prefix, compressedData, packet.writeMode, nil, packet.priority)
-        --OLD: C_ChatInfo.SendAddonMessage("questie", compressedData, packet.writeMode)
+        Questie:Debug(DEBUG_DEVELOP, "send(|cFFFF2222" ..string.len(compressedData) .. "|r)");
+        Questie:SendCommMessage(_QuestieComms.prefix, compressedData, packet.writeMode, nil, packet.priority);
+        --OLD: C_ChatInfo.SendAddonMessage("questie", compressedData, packet.writeMode);
     end
 end
 
 function _QuestieComms:OnCommReceived(message, distribution, sender)
-    Questie:Debug(DEBUG_DEVELOP, "|cFF22FF22", "sender:", "|r", sender, "distribution:", distribution, "Packet length:",string.len(message))
+    Questie:Debug(DEBUG_DEVELOP, "|cFF22FF22", "sender:", "|r", sender, "distribution:", distribution, "Packet length:",string.len(message));
     if message and sender then
         local decompressedData = QuestieSerializer:Deserialize(message);--QuestieCompress:Decompress(message);
         
@@ -415,11 +415,11 @@ function _QuestieComms:OnCommReceived(message, distribution, sender)
                 end
 
                 decompressedData.playerName = sender;
-                Questie:Debug(DEBUG_DEVELOP, "Executing message ID: ", decompressedData.msgId, "From: ", sender, "MessageVersion:", decompressedData.msgVer)
+                Questie:Debug(DEBUG_DEVELOP, "Executing message ID: ", decompressedData.msgId, "From: ", sender, "MessageVersion:", decompressedData.msgVer);
 
                 _QuestieComms.packets[decompressedData.msgId].read(decompressedData);
             else
-                Questie:Debug(DEBUG_INFO, "[QuestieComms]", decompressedData, decompressedData.msgId, _QuestieComms.packets[decompressedData.msgId])
+                Questie:Debug(DEBUG_INFO, "[QuestieComms]", decompressedData, decompressedData.msgId, _QuestieComms.packets[decompressedData.msgId]);
                 Questie:Error("Error reading QuestieComm message (If it persist try updating) Player:", sender, "PacketLength:", string.len(message));
             end
         elseif(decompressedData and not warnedUpdate and decompressedData.msgVer) then
@@ -427,7 +427,7 @@ function _QuestieComms:OnCommReceived(message, distribution, sender)
             if(floor(commMessageVersion) < floor(decompressedData.msgVer)) then
                 Questie:Error("You have an incompatible QuestieComms message! Please update!", "  Yours: v", commMessageVersion, sender..": v", decompressedData.msgVer);
             elseif(floor(commMessageVersion) > floor(decompressedData.msgVer)) then
-                Questie:Print("|cFFFF0000WARNING!|r", sender, "has an incompatible Questie version, QuestieComms won't work!", " Yours:", commMessageVersion, sender..":", decompressedData.msgVer)
+                Questie:Print("|cFFFF0000WARNING!|r", sender, "has an incompatible Questie version, QuestieComms won't work!", " Yours:", commMessageVersion, sender..":", decompressedData.msgVer);
             end
             warnedUpdate = true;
         end
@@ -449,7 +449,7 @@ function _QuestieComms:createPacket(messageId)
     pkt.data.msgId = messageId
     -- Some messages initialize
     if pkt.init then
-        pkt:init()
+        pkt:init();
     end
     return pkt
 end
@@ -484,7 +484,7 @@ end]]--
 
 --[[ NOT USED
 function QuestieComms:MessageReceived(channel, message, type, source) -- pcall this
-    Questie:Debug(DEBUG_DEVELOP, "recv(|cFF22FF22" .. message .. "|r)")
+    Questie:Debug(DEBUG_DEVELOP, "recv(|cFF22FF22" .. message .. "|r)");
     if channel == "questie" and source then
       local decompressedData = QuestieCompress:decompress(message);
       _QuestieComms.packets[message.msgId].read(decompressedData);
@@ -511,176 +511,176 @@ QC_ID_ASK_QUESTSLIST = 8 -- ask a player for their current quest log as a list o
 QC_ID_SEND_QUESTSLIST = 9
 
 function QuestieGetVersionString() -- todo: better place
-    local _,ver = GetAddOnInfo("QuestieDev-master")
+    local _,ver = GetAddOnInfo("QuestieDev-master");
     -- todo: better regex for this
-    ver = string.sub(ver, 32)
-    ver = string.sub(ver, 0, string.find(ver, "|")-1)
+    ver = string.sub(ver, 32);
+    ver = string.sub(ver, 0, string.find(ver, "|")-1);
     return ver
 end
 
 function QuestieGetVersionInfo() -- todo: better place
-    local ver = QuestieGetVersionString()
-    local major, minor, patch = strsplit(".", ver)
-    return tonumber(major), tonumber(minor), tonumber(patch)
+    local ver = QuestieGetVersionString();
+    local major, minor, patch = strsplit(".", ver);
+    return tonumber(major), tonumber(minor), tonumber(patch);
 end
 
 _QuestieComms.packets = {
     [QC_ID_BROADCAST_QUEST_UPDATE] = {
-        write = function(self)
+        write = function(self);
             local count = 0;
             for _ in pairs(self.quest.Objectives) do count = count + 1; end -- why does lua suck
 
-            self.stream:WriteShort(self.quest.Id)
-            self.stream:WriteByte(count)
+            self.stream:WriteShort(self.quest.Id);
+            self.stream:WriteByte(count);
 
             for _,objective in pairs(self.quest.Objectives) do
-                self.stream:WriteBytes(objective.Index, objective.Needed, objective.Collected)
+                self.stream:WriteBytes(objective.Index, objective.Needed, objective.Collected);
             end
         end,
-        read = function(self)
-            local quest = QuestieDB:GetQuest(self.stream:ReadShort())
-            local count = self.stream:ReadByte()
+        read = function(self);
+            local quest = QuestieDB:GetQuest(self.stream:ReadShort());
+            local count = self.stream:ReadByte();
             if quest then
                 if not quest.RemoteObjectives[self.player] then
                     quest.RemoteObjectives[self.player] = {}
                 end
-                local index = self.stream:ReadByte()
+                local index = self.stream:ReadByte();
                 if not quest.RemoteObjectives[self.player][index] then
                     quest.RemoteObjectives[self.player][index] = {}
                 end
-                quest.RemoteObjectives[self.player][index].Needed = self.stream:ReadByte()
-                quest.RemoteObjectives[self.player][index].Connected = self.stream:ReadByte()
+                quest.RemoteObjectives[self.player][index].Needed = self.stream:ReadByte();
+                quest.RemoteObjectives[self.player][index].Connected = self.stream:ReadByte();
             end
         end
     },
     [QC_ID_BROADCAST_QUESTIE_VERSION] = {
-        write = function(self)
-            local major, minor, patch = QuestieGetVersionInfo()
-            self.stream:WriteBytes(major, minor, patch)
+        write = function(self);
+            local major, minor, patch = QuestieGetVersionInfo();
+            self.stream:WriteBytes(major, minor, patch);
         end,
-        read = function(self)
+        read = function(self);
             if not __QUESTIE_ALREADY_UPDATE_MSG then -- hack to prevent saying there is an update twice
-                local major, minor, patch = self.stream:ReadBytes(3)
-                local majorNow, minorNow, patchNow = QuestieGetVersionInfo()
+                local major, minor, patch = self.stream:ReadBytes(3);
+                local majorNow, minorNow, patchNow = QuestieGetVersionInfo();
 
                 if major > majorNow or (major == majorNow and minor > minorNow) or (major == majorNow and minor == minorNow and patch > patchNow) then
                     DEFAULT_CHAT_FRAME:AddMessage("Questie has updated! New version: |cFF22FF22v" .. tostring(major) .. "." .. tostring(minor) .. "." .. tostring(patch)) -- todo: make this better
                     __QUESTIE_ALREADY_UPDATE_MSG = true
                     -- ask for changelog
-                    local clg = QuestieComms:GetPacket(QC_ID_ASK_CHANGELOG)
+                    local clg = QuestieComms:GetPacket(QC_ID_ASK_CHANGELOG);
                     clg.player = self.player
                     clg.writeMode = QC_WRITE_WHISPER
-                    QuestieComms:write(clg)
-                    clg.stream:Finished()
+                    QuestieComms:write(clg);
+                    clg.stream:Finished();
                 end
             end
         end,
-        init = function(self)
+        init = function(self);
             self.writeMode = QC_WRITE_CHANNEL
         end
     },
     [QC_ID_ASK_CHANGELOG] = {
-        write = function(self)
-            local major, minor, patch = QuestieGetVersionInfo()
-            self.stream:WriteBytes(major, minor, patch)
+        write = function(self);
+            local major, minor, patch = QuestieGetVersionInfo();
+            self.stream:WriteBytes(major, minor, patch);
         end,
-        read = function(self)
-            local sendChangelog = QuestieComms:GetPacket(QC_ID_SEND_CHANGELOG)
+        read = function(self);
+            local sendChangelog = QuestieComms:GetPacket(QC_ID_SEND_CHANGELOG);
             sendChangelog.player = self.player
             sendChangelog.writeMode = QC_WRITE_WHISPER
-            QuestieComms:write(sendChangelog)
-            sendChangelog.stream:Finished()
+            QuestieComms:write(sendChangelog);
+            sendChangelog.stream:Finished();
         end
     },
     [QC_ID_SEND_CHANGELOG] = {
-        write = function(self)
-            local version = QuestieGetVersionString()
+        write = function(self);
+            local version = QuestieGetVersionString();
             local latest = _QuestieChangeLog[version]
             local count = 0;
             for _ in pairs(latest) do count = count + 1; end -- why does lua suck
-            self.stream:WriteBytes(count)
-            self.stream:WriteShortString(version)
+            self.stream:WriteBytes(count);
+            self.stream:WriteShortString(version);
             for _,change in pairs(latest) do
-                self.stream:WriteShortString(change)
+                self.stream:WriteShortString(change);
             end
             for _,v in pairs(_MakeSegments(self)) do
-                --DEFAULT_CHAT_FRAME:AddMessage("lol" .. _ .. "  ".. v)
+                --DEFAULT_CHAT_FRAME:AddMessage("lol" .. _ .. "  ".. v);
             end
         end,
-        read = function(self)
-            local count = self.stream:ReadByte()
-            local ver = self.stream:ReadShortString()
+        read = function(self);
+            local count = self.stream:ReadByte();
+            local ver = self.stream:ReadShortString();
             local changes = {}
             for i=1, count do
-                local str = self.stream:ReadShortString()
-                DEFAULT_CHAT_FRAME:AddMessage(str)
-                table.insert(changes, str)
+                local str = self.stream:ReadShortString();
+                DEFAULT_CHAT_FRAME:AddMessage(str);
+                table.insert(changes, str);
             end
         end
     },
     ["BroadcastQuests"] = {
-        write = function(self)
+        write = function(self);
 
         end,
-        read = function(self)
+        read = function(self);
 
         end
     },
     [QC_ID_ASK_QUESTS] = {
-        write = function(self)
+        write = function(self);
             local count = 0;
             for _ in pairs(self.quests) do count = count + 1; end -- why does lua suck
-            self.stream:WriteByte(count)
+            self.stream:WriteByte(count);
             for _,id in pairs(self.quests) do
-                self.stream:WriteShort(id)
+                self.stream:WriteShort(id);
             end
         end,
-        read = function(self)
-            local count = self.stream:ReadByte()
+        read = function(self);
+            local count = self.stream:ReadByte();
             local quests = {};
             for i=1, count do
-                local qid = self.stream:ReadShort()
-                local quest = QuestieDB:GetQuest(qid)
+                local qid = self.stream:ReadShort();
+                local quest = QuestieDB:GetQuest(qid);
                 if quest and quest.Objectives then
-                    table.insert(quests, quest)
+                    table.insert(quests, quest);
                 end
             end
-            local pkt = QuestieComms:GetPacket(QC_ID_SEND_QUESTS)
+            local pkt = QuestieComms:GetPacket(QC_ID_SEND_QUESTS);
             pkt.player = self.player
             pkt.writeMode = QC_WRITE_WHISPER
             pkt.quests = quests
-            QuestieComms:write(pkt)
-            pkt.stream:Finished()
+            QuestieComms:write(pkt);
+            pkt.stream:Finished();
         end
     },
     [QC_ID_SEND_QUESTS] = {
-        write = function(self)
+        write = function(self);
             local count = 0;
             for _ in pairs(self.quests) do count = count + 1; end -- why does lua suck
-            self.stream:WriteByte(count)
+            self.stream:WriteByte(count);
             for _,quest in pairs(self.quests) do
-                self.stream:WriteShort(quest.Id)
+                self.stream:WriteShort(quest.Id);
                 local count = 0;
                 for _ in pairs(quest.Objectives) do count = count + 1; end -- why does lua suck
-                self.stream:WriteByte(count)
+                self.stream:WriteByte(count);
                 for index,v in pairs(quest.Objectives) do
-                    self.stream:WriteBytes(index, v.Needed, v.Collected)
+                    self.stream:WriteBytes(index, v.Needed, v.Collected);
                 end
             end
         end,
-        read = function(self)
-            local count = self.stream:ReadByte()
+        read = function(self);
+            local count = self.stream:ReadByte();
             for i=1, count do
-                local quest = QuestieDB:GetQuest(self.stream:ReadShort())
+                local quest = QuestieDB:GetQuest(self.stream:ReadShort());
                 if not quest.RemoteObjectives then
                     quest.RemoteObjectives = {}
                 end
                 if not quest.RemoteObjectives[self.player] then
                     quest.RemoteObjectives[self.player] = {}
                 end
-                local cnt = self.stream:ReadByte()
+                local cnt = self.stream:ReadByte();
                 for i=1, cnt do
-                    local index, needed, collected = self.stream:ReadBytes(3)
+                    local index, needed, collected = self.stream:ReadBytes(3);
                     if not quest.RemoteObjectives[self.player][index] then
                         quest.RemoteObjectives[self.player][index] = {}
                     end
@@ -691,56 +691,56 @@ _QuestieComms.packets = {
         end
     },
     [QC_ID_ASK_QUESTSLIST] = {
-        write = function(self)
+        write = function(self);
             -- no need to write anything, packet ID is enough
         end,
-        read = function(self)
-            local pkt = QuestieComms:GetPacket(QC_ID_SEND_QUESTSLIST)
+        read = function(self);
+            local pkt = QuestieComms:GetPacket(QC_ID_SEND_QUESTSLIST);
             pkt.player = self.player
             pkt.writeMode = QC_WRITE_WHISPER
-            QuestieComms:write(pkt)
-            pkt.stream:Finished()
+            QuestieComms:write(pkt);
+            pkt.stream:Finished();
         end
     },
     [QC_ID_SEND_QUESTSLIST] = {
-        write = function(self)
+        write = function(self);
             local count = 0;
             for _ in pairs(QuestiePlayer.currentQuestlog) do count = count + 1; end -- why does lua suck
-            self.stream:WriteByte(count)
+            self.stream:WriteByte(count);
             for id,_ in pairs(QuestiePlayer.currentQuestlog) do
-                self.stream:WriteShort(id)
+                self.stream:WriteShort(id);
             end
         end,
-        read = function(self)
-            local count = self.stream:ReadByte()
+        read = function(self);
+            local count = self.stream:ReadByte();
             qRemoteQuestLogs[self.player] = {self.stream:ReadShorts(count)}
             local toAsk = {}
             for _,id in pairs(qRemoteQuestLogs[self.player]) do
                 if QuestiePlayer.currentQuestlog[id] then
-                    table.insert(toAsk, id)
+                    table.insert(toAsk, id);
                 end
             end
-            local pkt = QuestieComms:GetPacket(QC_ID_ASK_QUESTS)
+            local pkt = QuestieComms:GetPacket(QC_ID_ASK_QUESTS);
             pkt.player = self.player
             pkt.writeMode = QC_WRITE_WHISPER
             pkt.quests = toAsk
-            QuestieComms:write(pkt)
-            pkt.stream:Finished()
+            QuestieComms:write(pkt);
+            pkt.stream:Finished();
         end
     }
 }
 
 function QuestieComms:TestGetQuestInfo(player)
-    local pkt = QuestieComms:GetPacket(QC_ID_ASK_QUESTSLIST)
+    local pkt = QuestieComms:GetPacket(QC_ID_ASK_QUESTSLIST);
     pkt.writeMode = QC_WRITE_WHISPER
     pkt.player = player
-    QuestieComms:write(pkt)
-    pkt.stream:Finished()
+    QuestieComms:write(pkt);
+    pkt.stream:Finished();
 end
 
 function QuestieComms:read(rawPacket, sourceType, source)
-    local stream = QuestieStreamLib:GetStream()
-    stream:Load(rawPacket)
+    local stream = QuestieStreamLib:GetStream();
+    stream:Load(rawPacket);
     local packetProcessor = _QuestieComms.packets[stream:ReadByte()];
     if (not packetProcessor) or (not packetProcessor.read) then
         -- invalid packet id, error or something
@@ -751,9 +751,9 @@ function QuestieComms:read(rawPacket, sourceType, source)
     context.stream = stream
     context.type = sourceType
     context.source = source
-    packetProcessor.read(context)
+    packetProcessor.read(context);
 
-    stream:Finished() -- add back to stream pool (optional, will be garbage collected otherwise)
+    stream:Finished() -- add back to stream pool (optional, will be garbage collected otherwise);
 end
 
 function QuestieComms:GetPacket(id)
@@ -761,88 +761,88 @@ function QuestieComms:GetPacket(id)
     for k,v in pairs(_QuestieComms.packets[id]) do
         pkt[k] = v
     end
-    pkt.stream = QuestieStreamLib:GetStream()
+    pkt.stream = QuestieStreamLib:GetStream();
     pkt.id = id
     if pkt.init then
-        pkt:init()
+        pkt:init();
     end
     return pkt
 end
 
 function _MakeSegments(packet)
-    local metaStream = QuestieStreamLib:GetStream()
+    local metaStream = QuestieStreamLib:GetStream();
     if packet.stream._size < packet.stream._pointer then
         packet.stream._size = packet.stream._pointer
     end
     if packet.stream._size < 128 then
-        metaStream:WriteByte(packet.id)
+        metaStream:WriteByte(packet.id);
         metaStream:WriteByte(1) -- only 1 chunk
         metaStream:WriteByte(1) -- chunk id
-        local meta = metaStream:Save()
-        metaStream:Finished()
+        local meta = metaStream:Save();
+        metaStream:Finished();
         return {meta .. ' ' .. packet.stream:Save()}
     end
     local ret = {};
-    local count = math.ceil(packet.stream._size / 128.0)
-    packet.stream:SetPointer(0)
+    local count = math.ceil(packet.stream._size / 128.0);
+    packet.stream:SetPointer(0);
     for i=1, count do
-        metaStream:SetPointer(0)
-        metaStream:WriteByte(packet.id)
-        metaStream:WriteByte(count)
-        metaStream:WriteByte(i)
-        local dat = metaStream:Save()
-        table.insert(ret, dat .. ' ' .. packet.stream:SavePart(128))
+        metaStream:SetPointer(0);
+        metaStream:WriteByte(packet.id);
+        metaStream:WriteByte(count);
+        metaStream:WriteByte(i);
+        local dat = metaStream:Save();
+        table.insert(ret, dat .. ' ' .. packet.stream:SavePart(128));
     end
-    metaStream:Finished()
+    metaStream:Finished();
     return ret
 end
 
 function QuestieComms:write(packet)
     if not packet.write then
-        DEFAULT_CHAT_FRAME:AddMessage("no writer!")
+        DEFAULT_CHAT_FRAME:AddMessage("no writer!");
         -- packet has no writer, error or something
         return
     end
-    --DEFAULT_CHAT_FRAME:AddMessage("QCWrite")
-    packet:write()
+    --DEFAULT_CHAT_FRAME:AddMessage("QCWrite");
+    packet:write();
     packet.stream._size = packet.stream._pointer
-    packet.stream:SetPointer(0)
+    packet.stream:SetPointer(0);
     if packet.writeMode == QC_WRITE_ALLGUILD then
         for _,segment in pairs(_MakeSegments(packet)) do
-            DEFAULT_CHAT_FRAME:AddMessage("send(|cFFFF2222" .. segment .. "|r)")
-            C_ChatInfo.SendAddonMessage("questie", segment, "GUILD")
+            DEFAULT_CHAT_FRAME:AddMessage("send(|cFFFF2222" .. segment .. "|r)");
+            C_ChatInfo.SendAddonMessage("questie", segment, "GUILD");
         end
     elseif packet.writeMode == QC_WRITE_ALLGROUP then
         for _,segment in pairs(_MakeSegments(packet)) do
-            DEFAULT_CHAT_FRAME:AddMessage("send(|cFFFF2222" .. segment .. "|r)")
-            C_ChatInfo.SendAddonMessage("questie", segment, "PARTY")
+            DEFAULT_CHAT_FRAME:AddMessage("send(|cFFFF2222" .. segment .. "|r)");
+            C_ChatInfo.SendAddonMessage("questie", segment, "PARTY");
         end
     elseif packet.writeMode == QC_WRITE_ALLRAID then
         for _,segment in pairs(_MakeSegments(packet)) do
-            DEFAULT_CHAT_FRAME:AddMessage("send(|cFFFF2222" .. segment .. "|r)")
-            C_ChatInfo.SendAddonMessage("questie", segment, "RAID")
+            DEFAULT_CHAT_FRAME:AddMessage("send(|cFFFF2222" .. segment .. "|r)");
+            C_ChatInfo.SendAddonMessage("questie", segment, "RAID");
         end
     elseif packet.writeMode == QC_WRITE_WHISPER then
         for _,segment in pairs(_MakeSegments(packet)) do
-            DEFAULT_CHAT_FRAME:AddMessage("send(|cFFFF2222" .. segment .. "|r)")
-            C_ChatInfo.SendAddonMessage("questie", segment, "WHISPER", packet.player)
+            DEFAULT_CHAT_FRAME:AddMessage("send(|cFFFF2222" .. segment .. "|r)");
+            C_ChatInfo.SendAddonMessage("questie", segment, "WHISPER", packet.player);
         end
     elseif packet.writeMode == QC_WRITE_CHANNEL then
         for _,segment in pairs(_MakeSegments(packet)) do
-            DEFAULT_CHAT_FRAME:AddMessage("send(|cFFFF2222" .. segment .. "|r)")
-            C_ChatInfo.SendAddonMessage("questie", segment, "CHANNEL", GetChannelName("questiecom"))
+            DEFAULT_CHAT_FRAME:AddMessage("send(|cFFFF2222" .. segment .. "|r)");
+            C_ChatInfo.SendAddonMessage("questie", segment, "CHANNEL", GetChannelName("questiecom"));
         end
     end
 end
 
-QuestieComms.parserStream = QuestieStreamLib:GetStream()
+QuestieComms.parserStream = QuestieStreamLib:GetStream();
 QuestieComms.packetReadQueue = {}
 
 function QuestieComms:MessageReceived(channel, message, type, source) -- pcall this
-    DEFAULT_CHAT_FRAME:AddMessage("recv(|cFF22FF22" .. message .. "|r)")
+    DEFAULT_CHAT_FRAME:AddMessage("recv(|cFF22FF22" .. message .. "|r)");
     if channel == "questie" and source then
-        QuestieComms.parserStream:load(string.sub(message, 0, string.find(message, " ")-1))
-        local packetid, count, index = QuestieComms.parserStream:ReadBytes(3)
+        QuestieComms.parserStream:load(string.sub(message, 0, string.find(message, " ")-1));
+        local packetid, count, index = QuestieComms.parserStream:ReadBytes(3);
         if not QuestieComms.packetReadQueue[source] then
             QuestieComms.packetReadQueue[source] = {}
         end
@@ -851,37 +851,37 @@ function QuestieComms:MessageReceived(channel, message, type, source) -- pcall t
             QuestieComms.packetReadQueue[source][packetid].count = count
             QuestieComms.packetReadQueue[source][packetid].have = 0
         end
-        QuestieComms.packetReadQueue[source][packetid][index] = string.sub(message, string.find(message, " ")+1)
+        QuestieComms.packetReadQueue[source][packetid][index] = string.sub(message, string.find(message, " ")+1);
         QuestieComms.packetReadQueue[source][packetid].have = QuestieComms.packetReadQueue[source][packetid].have + 1
         if QuestieComms.packetReadQueue[source][packetid].have == count then
             -- process packet
-            --DEFAULT_CHAT_FRAME:AddMessage("Process packet!")
-            local pkt = QuestieComms:GetPacket(packetid)
-            pkt.stream:SetPointer(0)
+            --DEFAULT_CHAT_FRAME:AddMessage("Process packet!");
+            local pkt = QuestieComms:GetPacket(packetid);
+            pkt.stream:SetPointer(0);
             for i=1, count do
-                pkt.stream:LoadPart(QuestieComms.packetReadQueue[source][packetid][i])
+                pkt.stream:LoadPart(QuestieComms.packetReadQueue[source][packetid][i]);
             end
             pkt.stream._pointer = 0;
             pkt.player = source
-            pkt:read()
+            pkt:read();
             QuestieComms.packetReadQueue[source][packetid] = nil
         end
     end
 end
 
 function QuestieComms:BroadcastQuestUpdate(quest) -- broadcast quest update to group or raid
-    local raid = UnitInRaid("player")
-    local party = UnitInParty("player")
+    local raid = UnitInRaid("player");
+    local party = UnitInParty("player");
     if raid or party then
-        local pkt = QuestieComms:GetPacket(QC_ID_BROADCAST_QUEST_UPDATE)
+        local pkt = QuestieComms:GetPacket(QC_ID_BROADCAST_QUEST_UPDATE);
         pkt.quest = quest
         if raid then
             raid.writeMode = QC_WRITE_ALLRAID
         else
             raid.writeMode = QC_WRITE_ALLGROUP
         end
-        QuestieComms:write(pkt)
-        pkt.stream:Finished()
+        QuestieComms:write(pkt);
+        pkt.stream:Finished();
     end
 end
 ]]--

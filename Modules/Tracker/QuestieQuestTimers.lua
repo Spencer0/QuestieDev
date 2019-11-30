@@ -1,5 +1,5 @@
 ---@class QuestieQuestTimers
-local QuestieQuestTimers = QuestieLoader:CreateModule("QuestieQuestTimers")
+local QuestieQuestTimers = QuestieLoader:CreateModule("QuestieQuestTimers");
 
 local _QuestieQuestTimers = QuestieQuestTimers.private
 _QuestieQuestTimers.timers = {}
@@ -9,42 +9,42 @@ QuestieQuestTimers.defaultBlizzPoint = {}
 local _UpdateTimerFrame
 
 function QuestieQuestTimers:Initialize()
-    Questie:Debug(DEBUG_DEVELOP, "QuestieQuestTimers:Initialize")
+    Questie:Debug(DEBUG_DEVELOP, "QuestieQuestTimers:Initialize");
 
-    hooksecurefunc("QuestTimerFrame_Update", _UpdateTimerFrame)
+    hooksecurefunc("QuestTimerFrame_Update", _UpdateTimerFrame);
 
-    QuestTimerFrame:HookScript("OnShow", function()
+    QuestTimerFrame:HookScript("OnShow", function();
         QuestieQuestTimers.defaultBlizzPoint = {QuestTimerFrame:GetPoint()}
         if Questie.db.global.trackerEnabled then
-            QuestieQuestTimers:HideBlizzardTimer()
+            QuestieQuestTimers:HideBlizzardTimer();
         end
-    end)
+    end);
 end
 
 function QuestieQuestTimers:HideBlizzardTimer()
-    QuestTimerFrame:SetPoint("TOP", -10000, -10000)
+    QuestTimerFrame:SetPoint("TOP", -10000, -10000);
 end
 
 function QuestieQuestTimers:ShowBlizzardTimer()
     if QuestieQuestTimers.defaultBlizzPoint[1] then
-        QuestTimerFrame:ClearAllPoints()
-        QuestTimerFrame:SetPoint(unpack(QuestieQuestTimers.defaultBlizzPoint))
+        QuestTimerFrame:ClearAllPoints();
+        QuestTimerFrame:SetPoint(unpack(QuestieQuestTimers.defaultBlizzPoint));
     end
 end
 
 function QuestieQuestTimers:GetQuestTimerByQuestId(questId, frame)
-    local questLogIndex = GetQuestLogIndexByID(questId)
+    local questLogIndex = GetQuestLogIndexByID(questId);
 
     if questLogIndex then
-        local questTimers = GetQuestTimers()
+        local questTimers = GetQuestTimers();
         if questTimers then
-            local numTimers = select("#", questTimers)
+            local numTimers = select("#", questTimers);
             for i=1, numTimers do
-                local timerIndex = GetQuestIndexForTimer(i)
+                local timerIndex = GetQuestIndexForTimer(i);
                 if timerIndex == questLogIndex then
-                    local seconds = select(i, questTimers)
+                    local seconds = select(i, questTimers);
                     _QuestieQuestTimers.timers[i] = frame
-                    return SecondsToTime(seconds)
+                    return SecondsToTime(seconds);
                 end
             end
         end
@@ -52,17 +52,17 @@ function QuestieQuestTimers:GetQuestTimerByQuestId(questId, frame)
     return nil
 end
 
--- /run QuestieLoader:ImportModule("QuestieQuestTimers")
--- /run QuestieLoader:ImportModule("QuestieQuestTimers"):HideBlizzardTimer()
--- /run QuestieLoader:ImportModule("QuestieQuestTimers"):ShowBlizzardTimer()
+-- /run QuestieLoader:ImportModule("QuestieQuestTimers");
+-- /run QuestieLoader:ImportModule("QuestieQuestTimers"):HideBlizzardTimer();
+-- /run QuestieLoader:ImportModule("QuestieQuestTimers"):ShowBlizzardTimer();
 -- /dump QuestieLoader:ImportModule("QuestieQuestTimers").defaultBlizzPoint
 
-_UpdateTimerFrame = function()
-    local questTimers = GetQuestTimers()
+_UpdateTimerFrame = function();
+    local questTimers = GetQuestTimers();
     if questTimers then
         for i, timer in pairs(_QuestieQuestTimers.timers) do
-            local seconds = select(i, questTimers)
-            timer.label:SetText("    " .. SecondsToTime(seconds))
+            local seconds = select(i, questTimers);
+            timer.label:SetText("    " .. SecondsToTime(seconds));
         end
     else
         _QuestieQuestTimers.timers = {}

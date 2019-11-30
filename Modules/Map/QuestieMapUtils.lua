@@ -5,7 +5,7 @@ QuestieMap.utils = {};
 ---@type QuestieLib
 local QuestieLib = QuestieLoader:ImportModule("QuestieLib");
 
-local HBD = LibStub("HereBeDragonsQuestie-2.0")
+local HBD = LibStub("HereBeDragonsQuestie-2.0");
 
 -- ALl the speed we can get is worth it.
 local tinsert = table.insert
@@ -17,27 +17,27 @@ function QuestieMap.utils:SetDrawOrder(frame)
     -- HandyNotes uses GetFrameLevel + 6, so we use +7
     if frame.miniMapIcon then
         local frameLevel = Minimap:GetFrameLevel() + 7
-        local frameStrata = Minimap:GetFrameStrata()
-        frame:SetParent(Minimap)
-        frame:SetFrameStrata(frameStrata)
-        frame:SetFrameLevel(frameLevel)
+        local frameStrata = Minimap:GetFrameStrata();
+        frame:SetParent(Minimap);
+        frame:SetFrameStrata(frameStrata);
+        frame:SetFrameLevel(frameLevel);
     else
         local frameLevel = WorldMapFrame:GetFrameLevel() + 7
-        local frameStrata = WorldMapFrame:GetFrameStrata()
-        frame:SetParent(WorldMapFrame)
-        frame:SetFrameStrata(frameStrata)
-        frame:SetFrameLevel(frameLevel)
+        local frameStrata = WorldMapFrame:GetFrameStrata();
+        frame:SetParent(WorldMapFrame);
+        frame:SetFrameStrata(frameStrata);
+        frame:SetFrameLevel(frameLevel);
     end
 
     -- Draw layer is between -8 and 7, please leave some number above so we don't paint ourselves into a corner...
     if (frame.data and
         (frame.data.Icon == ICON_TYPE_AVAILABLE or frame.data.Icon ==
             ICON_TYPE_REPEATABLE)) then
-        frame.texture:SetDrawLayer("OVERLAY", 5)
+        frame.texture:SetDrawLayer("OVERLAY", 5);
     elseif (frame.data and frame.data.Icon == ICON_TYPE_COMPLETE) then
-        frame.texture:SetDrawLayer("OVERLAY", 6)
+        frame.texture:SetDrawLayer("OVERLAY", 6);
     else
-        frame.texture:SetDrawLayer("OVERLAY", 0)
+        frame.texture:SetDrawLayer("OVERLAY", 0);
     end
 end
 
@@ -98,21 +98,21 @@ function QuestieMap.utils:CalcHotzones(points, rangeR, count)
                         end
                         local aX, aY = HBD:GetWorldCoordinatesFromZone(
                                             point.x / times, point.y / times,
-                                            point.UIMapId)
+                                            point.UIMapId);
                         local bX, bY = HBD:GetWorldCoordinatesFromZone(
                                             point2.x / times, point2.y / times,
-                                            point2.UIMapId)
-                        -- local dX = (point.x*times) - (point2.x*times)
+                                            point2.UIMapId);
+                        -- local dX = (point.x*times) - (point2.x*times);
                         -- local dY = (point.y*times) - (point2.y*times);
                         local distance =
-                            QuestieLib:Euclid(aX or 0, aY or 0, bX or 0, bY or 0)
+                            QuestieLib:Euclid(aX or 0, aY or 0, bX or 0, bY or 0);
                         if (distance < movingRange and point2.touched == nil) then
                             point2.touched = true
-                            tinsert(notes, point2)
+                            tinsert(notes, point2);
                         end
                     end
                 end
-                tinsert(hotzones, notes)
+                tinsert(hotzones, notes);
             end
         end
         if (FoundUntouched == nil) then break end
@@ -128,7 +128,7 @@ function QuestieMap.utils:IsExplored(uiMapId, x, y)
             C_MapExplorationInfo.GetExploredAreaIDsAtPosition(uiMapId,
                                                               CreateVector2D(
                                                                   x / 100,
-                                                                  y / 100))
+                                                                  y / 100));
         if exploredAreaIDs then
             IsExplored = true -- Explored
         elseif (uiMapId == 1453) then
@@ -154,7 +154,7 @@ function QuestieMap.utils:MapExplorationUpdate()
             local frame = _G[frameName]
             if (frame and frame.x and frame.y and frame.UiMapID and frame.hidden) then
                 if (QuestieMap.utils:IsExplored(frame.UiMapID, frame.x, frame.y)) then
-                    frame:FakeUnhide()
+                    frame:FakeUnhide();
                 end
             end
         end

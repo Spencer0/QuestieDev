@@ -13,7 +13,7 @@ local QuestieOptionsUtils = QuestieLoader:ImportModule("QuestieOptionsUtils");
 local QuestieDBMIntegration = QuestieLoader:ImportModule("QuestieDBMIntegration");
 
 QuestieOptions.tabs.dbm = {...}
-local optionsDefaults = QuestieOptionsDefaults:Load()
+local optionsDefaults = QuestieOptionsDefaults:Load();
 
 
 --TODO, hid hud tab if DBMHudMap global doesn't exist? Or at very least gray out options?
@@ -38,13 +38,13 @@ function QuestieOptions.tabs.dbm:Initialize()
                 width = "full",
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieOptions:SetGlobalOptionValue(info, value);
 
                     if value then
-                        QuestieDBMIntegration:EnableHUD()
+                        QuestieDBMIntegration:EnableHUD();
                         --Hud Integration is completely innert when disabled, so QuestieDBMIntegration:SoftReset() cannot be used since it has no local tables
                         --Questies SmoothReset must be used after enabling hud so that HUD can build it's own tables when initial icons get added
-                        QuestieQuest:SmoothReset()
+                        QuestieQuest:SmoothReset();
                     else
                         QuestieDBMIntegration:ClearAll(true)--Passing true unregisters events and completely disables HUD activity after the ClearAll
                     end
@@ -58,8 +58,8 @@ function QuestieOptions.tabs.dbm:Initialize()
                 width = "full",
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
-                    QuestieDBMIntegration:SoftReset()
+                    QuestieOptions:SetGlobalOptionValue(info, value);
+                    QuestieDBMIntegration:SoftReset();
                 end,
             },
             DBMHUDRefresh = {
@@ -74,8 +74,8 @@ function QuestieOptions.tabs.dbm:Initialize()
                 step = 0.01,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
-                    QuestieDBMIntegration:ChangeRefreshRate(value)
+                    QuestieOptions:SetGlobalOptionValue(info, value);
+                    QuestieDBMIntegration:ChangeRefreshRate(value);
                 end,
             },
             Spacer_A = QuestieOptionsUtils:Spacer(6),
@@ -96,8 +96,8 @@ function QuestieOptions.tabs.dbm:Initialize()
                 step = 20,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
-                    QuestieDBMIntegration:ChangeZoomLevel(value)
+                    QuestieOptions:SetGlobalOptionValue(info, value);
+                    QuestieDBMIntegration:ChangeZoomLevel(value);
                 end,
             },
             dbmHUDRadius = {
@@ -111,8 +111,8 @@ function QuestieOptions.tabs.dbm:Initialize()
                 step = 0.5,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
-                    QuestieDBMIntegration:SoftReset()
+                    QuestieOptions:SetGlobalOptionValue(info, value);
+                    QuestieDBMIntegration:SoftReset();
                 end,
             },
             Spacer_C = QuestieOptionsUtils:Spacer(20),
@@ -130,8 +130,8 @@ function QuestieOptions.tabs.dbm:Initialize()
                 width = "full",
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
-                    QuestieDBMIntegration:SoftReset()
+                    QuestieOptions:SetGlobalOptionValue(info, value);
+                    QuestieDBMIntegration:SoftReset();
                 end,
             },
             dbmHUDShowSlay = {
@@ -142,8 +142,8 @@ function QuestieOptions.tabs.dbm:Initialize()
                 width = "full",
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
-                    QuestieDBMIntegration:SoftReset()
+                    QuestieOptions:SetGlobalOptionValue(info, value);
+                    QuestieDBMIntegration:SoftReset();
                 end,
             },
             dbmHUDShowLoot = {
@@ -154,8 +154,8 @@ function QuestieOptions.tabs.dbm:Initialize()
                 width = "full",
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
-                    QuestieDBMIntegration:SoftReset()
+                    QuestieOptions:SetGlobalOptionValue(info, value);
+                    QuestieDBMIntegration:SoftReset();
                 end,
             },
             dbmHUDShowInteract = {
@@ -166,8 +166,8 @@ function QuestieOptions.tabs.dbm:Initialize()
                 width = "full",
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
-                    QuestieDBMIntegration:SoftReset()
+                    QuestieOptions:SetGlobalOptionValue(info, value);
+                    QuestieDBMIntegration:SoftReset();
                 end,
             },
         },

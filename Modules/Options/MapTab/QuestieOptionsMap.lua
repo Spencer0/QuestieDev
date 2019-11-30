@@ -15,7 +15,7 @@ local QuestieCoords = QuestieLoader:ImportModule("QuestieCoords");
 local QuestieMap = QuestieLoader:ImportModule("QuestieMap");
 
 QuestieOptions.tabs.map = {...}
-local optionsDefaults = QuestieOptionsDefaults:Load()
+local optionsDefaults = QuestieOptionsDefaults:Load();
 
 
 function QuestieOptions.tabs.map:Initialize()
@@ -37,7 +37,7 @@ function QuestieOptions.tabs.map:Initialize()
                 width = "full",
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieOptions:SetGlobalOptionValue(info, value);
 
                     if value then
                         Questie_Toggle:Show();
@@ -54,8 +54,8 @@ function QuestieOptions.tabs.map:Initialize()
                 width = "full",
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
-                    QuestieFramePool:UpdateGlowConfig(false, value)
+                    QuestieOptions:SetGlobalOptionValue(info, value);
+                    QuestieFramePool:UpdateGlowConfig(false, value);
                 end,
             },
             questObjectiveColors = {
@@ -66,8 +66,8 @@ function QuestieOptions.tabs.map:Initialize()
                 width = "full",
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
-                    QuestieFramePool:UpdateColorConfig(false, value)
+                    QuestieOptions:SetGlobalOptionValue(info, value);
+                    QuestieFramePool:UpdateColorConfig(false, value);
                 end,
             },
             Spacer_A = QuestieOptionsUtils:Spacer(6),
@@ -88,8 +88,8 @@ function QuestieOptions.tabs.map:Initialize()
                 step = 0.01,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieMap:RescaleIcons()
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieMap:RescaleIcons();
+                    QuestieOptions:SetGlobalOptionValue(info, value);
                 end,
             },
             availableScale = {
@@ -103,8 +103,8 @@ function QuestieOptions.tabs.map:Initialize()
                 step = 0.01,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieMap:RescaleIcons()
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieMap:RescaleIcons();
+                    QuestieOptions:SetGlobalOptionValue(info, value);
                 end,
             },
             eventScale = {
@@ -118,8 +118,8 @@ function QuestieOptions.tabs.map:Initialize()
                 step = 0.01,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieMap:RescaleIcons()
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieMap:RescaleIcons();
+                    QuestieOptions:SetGlobalOptionValue(info, value);
                 end,
             },
             lootScale = {
@@ -133,8 +133,8 @@ function QuestieOptions.tabs.map:Initialize()
                 step = 0.01,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieMap:RescaleIcons()
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieMap:RescaleIcons();
+                    QuestieOptions:SetGlobalOptionValue(info, value);
                 end,
             },
             monsterScale = {
@@ -148,8 +148,8 @@ function QuestieOptions.tabs.map:Initialize()
                 step = 0.01,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieMap:RescaleIcons()
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieMap:RescaleIcons();
+                    QuestieOptions:SetGlobalOptionValue(info, value);
                 end,
             },
             objectScale = {
@@ -163,8 +163,8 @@ function QuestieOptions.tabs.map:Initialize()
                 step = 0.01,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieMap:RescaleIcons()
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieMap:RescaleIcons();
+                    QuestieOptions:SetGlobalOptionValue(info, value);
                 end,
             },
             Spacer_C = QuestieOptionsUtils:Spacer(20),
@@ -182,7 +182,7 @@ function QuestieOptions.tabs.map:Initialize()
                 width = "full",
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieOptions:SetGlobalOptionValue(info, value);
 
                     if not value then
                         QuestieCoords.ResetMapText();
@@ -201,7 +201,7 @@ function QuestieOptions.tabs.map:Initialize()
                 disabled = function() return not Questie.db.global.mapCoordinatesEnabled end,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieOptions:SetGlobalOptionValue(info, value);
                 end,
             }
         },

@@ -25,7 +25,7 @@ end
 ---@return Module @Module reference
 function QuestieLoader:CreateModule(name)
   if (not modules[name]) then
-    modules[name] = QuestieLoader:CreateBlankModule()
+    modules[name] = QuestieLoader:CreateBlankModule();
     return modules[name]
   else
     return modules[name]
@@ -36,7 +36,7 @@ end
 ---@return Module @Module reference
 function QuestieLoader:ImportModule(name)
   if (not modules[name]) then
-    modules[name] = QuestieLoader:CreateBlankModule()
+    modules[name] = QuestieLoader:CreateBlankModule();
     return modules[name]
   else
     return modules[name]

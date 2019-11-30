@@ -12,27 +12,27 @@ local QuestieOptionsMinimapIcon = QuestieLoader:ImportModule("QuestieOptionsMini
 QuestieOptions.tabs = {...}
 QuestieConfigFrame = {...}
 
-local AceGUI = LibStub("AceGUI-3.0")
+local AceGUI = LibStub("AceGUI-3.0");
 
 -- Forward declaration
 local _CreateGUI
 
 function QuestieOptions:Initialize()
-    Questie:Debug(DEBUG_DEVELOP, "[QuestieOptions]: Initializing...")
+    Questie:Debug(DEBUG_DEVELOP, "[QuestieOptions]: Initializing...");
 
-    local optionsGUI = _CreateGUI()
-    LibStub("AceConfigQuestie-3.0"):RegisterOptionsTable("Questie", optionsGUI)
+    local optionsGUI = _CreateGUI();
+    LibStub("AceConfigQuestie-3.0"):RegisterOptionsTable("Questie", optionsGUI);
     Questie.configFrame = LibStub("AceConfigDialogQuestie-3.0"):AddToBlizOptions("Questie", "Questie");
 
     local configFrame = AceGUI:Create("Frame");
-    LibStub("AceConfigDialogQuestie-3.0"):SetDefaultSize("Questie", 625, 700)
-    LibStub("AceConfigDialogQuestie-3.0"):Open("Questie", configFrame)
+    LibStub("AceConfigDialogQuestie-3.0"):SetDefaultSize("Questie", 625, 700);
+    LibStub("AceConfigDialogQuestie-3.0"):Open("Questie", configFrame);
     configFrame:Hide();
     QuestieConfigFrame = configFrame.frame;
     table.insert(UISpecialFrames, "QuestieConfigFrame");
 
-    QuestieOptionsMinimapIcon:Initialize()
-    Questie:Debug(DEBUG_DEVELOP, "[QuestieOptions]: Initialization done")
+    QuestieOptionsMinimapIcon:Initialize();
+    Questie:Debug(DEBUG_DEVELOP, "[QuestieOptions]: Initialization done");
 end
 
 -- Generic function to hide the config frame.
@@ -45,10 +45,10 @@ end
 -- Open the configuration window
 function QuestieOptions:OpenConfigWindow()
     if not QuestieConfigFrame:IsShown() then
-        PlaySound(882)
-        QuestieConfigFrame:Show()
+        PlaySound(882);
+        QuestieConfigFrame:Show();
     else
-        QuestieConfigFrame:Hide()
+        QuestieConfigFrame:Hide();
     end
 end
 
@@ -60,24 +60,24 @@ end
 -- set option value
 function QuestieOptions:SetGlobalOptionValue(info, value)
     if debug and Questie.db.global[info[#info]] ~= value then
-        Questie:Debug(DEBUG_SPAM, "DEBUG: global option "..info[#info].." changed from '"..tostring(Questie.db.global[info[#info]]).."' to '"..tostring(value).."'")
+        Questie:Debug(DEBUG_SPAM, "DEBUG: global option "..info[#info].." changed from '"..tostring(Questie.db.global[info[#info]]).."' to '"..tostring(value).."'");
     end
     Questie.db.global[info[#info]] = value
 end
 
 function QuestieOptions:AvailableQuestRedraw()
-    QuestieQuest:CalculateAvailableQuests()
-    QuestieQuest:DrawAllAvailableQuests()
+    QuestieQuest:CalculateAvailableQuests();
+    QuestieQuest:DrawAllAvailableQuests();
 end
 
 function QuestieOptions:ClusterRedraw()
-    Questie:Debug(DEBUG_INFO, "Clustering changed, redrawing!")
+    Questie:Debug(DEBUG_INFO, "Clustering changed, redrawing!");
     --Redraw clusters here
     QuestieQuest:SmoothReset();
 end
 
 
-_CreateGUI = function()
+_CreateGUI = function();
     return {
         name = "Questie",
         handler = Questie,

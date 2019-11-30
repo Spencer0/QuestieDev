@@ -29,11 +29,11 @@ function QuestieOptionsMinimapIcon:Initialize()
                     QuestieOptions:HideFrame();
                     return;
                 elseif IsControlKeyDown() then
-                    QuestieQuest:SmoothReset()
+                    QuestieQuest:SmoothReset();
                     return
                 end
 
-                QuestieOptions:OpenConfigWindow()
+                QuestieOptions:OpenConfigWindow();
 
                 if QuestieJourney:IsShown() then
                     QuestieJourney.ToggleJourneyWindow();

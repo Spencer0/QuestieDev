@@ -14,11 +14,11 @@ end
 local _optionsTimer = nil;
 function QuestieOptionsUtils:Delay(time, func, message)
     if(_optionsTimer) then
-        Questie:CancelTimer(_optionsTimer)
+        Questie:CancelTimer(_optionsTimer);
         _optionsTimer = nil;
     end
-    _optionsTimer = Questie:ScheduleTimer(function()
-        func()
-        Questie:Debug(DEBUG_DEVELOP, message)
-    end, time)
+    _optionsTimer = Questie:ScheduleTimer(function();
+        func();
+        Questie:Debug(DEBUG_DEVELOP, message);
+    end, time);
 end

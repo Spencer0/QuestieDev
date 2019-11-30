@@ -11,7 +11,7 @@ local QuestieOptionsUtils = QuestieLoader:ImportModule("QuestieOptionsUtils");
 local QuestieNameplate = QuestieLoader:ImportModule("QuestieNameplate");
 
 QuestieOptions.tabs.nameplate = {...}
-local optionsDefaults = QuestieOptionsDefaults:Load()
+local optionsDefaults = QuestieOptionsDefaults:Load();
 
 
 function QuestieOptions.tabs.nameplate:Initialize()
@@ -33,7 +33,7 @@ function QuestieOptions.tabs.nameplate:Initialize()
                 width = "full",
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieOptions:SetGlobalOptionValue(info, value);
 
                     -- on false, hide current nameplates
                     if not value then
@@ -54,8 +54,8 @@ function QuestieOptions.tabs.nameplate:Initialize()
                 disabled = function() return not Questie.db.global.nameplateEnabled; end,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieNameplate:RedrawIcons()
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieNameplate:RedrawIcons();
+                    QuestieOptions:SetGlobalOptionValue(info, value);
                 end,
             },
             nameplateY = {
@@ -70,8 +70,8 @@ function QuestieOptions.tabs.nameplate:Initialize()
                 disabled = function() return not Questie.db.global.nameplateEnabled; end,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieNameplate:RedrawIcons()
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieNameplate:RedrawIcons();
+                    QuestieOptions:SetGlobalOptionValue(info, value);
                 end,
             },
             nameplateScale = {
@@ -86,8 +86,8 @@ function QuestieOptions.tabs.nameplate:Initialize()
                 disabled = function() return not Questie.db.global.nameplateEnabled; end,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
-                    QuestieNameplate:RedrawIcons()
+                    QuestieOptions:SetGlobalOptionValue(info, value);
+                    QuestieNameplate:RedrawIcons();
                 end,
 
             },
@@ -120,7 +120,7 @@ function QuestieOptions.tabs.nameplate:Initialize()
                 width = "full",
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieOptions:SetGlobalOptionValue(info, value);
 
                     -- on false, hide current nameplates
                     if not value then
@@ -143,8 +143,8 @@ function QuestieOptions.tabs.nameplate:Initialize()
                 disabled = function() return not Questie.db.global.nameplateTargetFrameEnabled; end,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieNameplate:RedrawFrameIcon()
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieNameplate:RedrawFrameIcon();
+                    QuestieOptions:SetGlobalOptionValue(info, value);
                 end,
             },
             nameplateTargetFrameY  = {
@@ -159,8 +159,8 @@ function QuestieOptions.tabs.nameplate:Initialize()
                 disabled = function() return not Questie.db.global.nameplateTargetFrameEnabled; end,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieNameplate:RedrawFrameIcon()
-                    QuestieOptions:SetGlobalOptionValue(info, value)
+                    QuestieNameplate:RedrawFrameIcon();
+                    QuestieOptions:SetGlobalOptionValue(info, value);
                 end,
             },
             nameplateTargetFrameScale  = {
@@ -175,8 +175,8 @@ function QuestieOptions.tabs.nameplate:Initialize()
                 disabled = function() return not Questie.db.global.nameplateTargetFrameEnabled; end,
                 get = function(info) return QuestieOptions:GetGlobalOptionValue(info); end,
                 set = function (info, value)
-                    QuestieOptions:SetGlobalOptionValue(info, value)
-                    QuestieNameplate:RedrawFrameIcon()
+                    QuestieOptions:SetGlobalOptionValue(info, value);
+                    QuestieNameplate:RedrawFrameIcon();
                 end,
 
             },
