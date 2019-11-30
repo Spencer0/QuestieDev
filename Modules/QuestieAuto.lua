@@ -9,7 +9,7 @@ function QuestieAuto:QUEST_PROGRESS(event, ...)
 end
 
 function QuestieAuto:ACCEPT_QUEST_GOSSIP(...)
-    local MOP_INDEX_CONST = 7 -- was '5' in Cataclysm
+    local CLASSIC_INDEX_CONST = 7 -- was '5' in Cataclysm
     for i = 1, select("#", ...), MOP_INDEX_CONST do
         local title = select(i, ...);
         local isTrivial = select(i + 2, ...);
@@ -19,21 +19,21 @@ function QuestieAuto:ACCEPT_QUEST_GOSSIP(...)
                       i);
         if (not isTrivial) then
             Questie:Debug(DEBUG_INFO, "Accepting quest, ", title);
-            SelectGossipAvailableQuest(math.floor(i / MOP_INDEX_CONST) + 1);
+            SelectGossipAvailableQuest(math.floor(i / CLASSIC_INDEX_CONST) + 1);
         end
     end
 end
 
 function QuestieAuto:COMPLETE_QUEST_GOSSIP(...)
-    local MOP_INDEX_CONST = 6 -- was '4' in Cataclysm
-    for i = 1, select("#", ...), MOP_INDEX_CONST do
+    local CLASSIC_INDEX_CONST = 6 -- was '4' in Cataclysm
+    for i = 1, select("#", ...), CLASSIC_INDEX_CONST do
         local title = select(i, ...);
         local isComplete = select(i + 3, ...) -- complete status
         Questie:Debug(DEBUG_DEVELOP, "Completing quest, ", title, "Complete",
                       isComplete, "index", i);
         if (isComplete) then
             Questie:Debug(DEBUG_INFO, "Completing quest, ", title);
-            SelectGossipActiveQuest(math.floor(i / MOP_INDEX_CONST) + 1);
+            SelectGossipActiveQuest(math.floor(i / CLASSIC_INDEX_CONST) + 1);
         end
     end
 end
